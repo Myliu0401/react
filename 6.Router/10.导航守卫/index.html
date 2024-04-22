@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        @media screen and (max-width: 500px) {
+            
+        }
+    </style>
+</head>
+<body>
+    <script>
+        /* 
+                导航守卫：当离开页面，进入另一个页面时，触发的事件  
+
+                history对象
+                    listen属性函数：该函数的功能是 添加 一个监听器，地址发生变化时，会调用传递的回调函数。由于是添加一个监听器，所以不会覆盖监听器。
+                       参数：函数，这个回调函数的运行时间点，是发生在即将发生跳转时。
+                         参数1: location对象，跳转的地址信息
+                         参数2: action，一个字符串，表示进入该地址的方式
+                            POP：表示出栈
+                              通过点击浏览器的后退、前进      
+                              调用history.go
+                              调用history.goBack
+                              调用history.goForward
+                            PUSH：表示入栈
+                              history.push
+                            REPLACE: 替换
+                              history.replace
+                      listen函数返回一个函数，执行该返回的函数可以取消监听
+
+                    block属性函数：该函数的功能是 设置 一个阻塞， 设置阻塞的消息，当页面跳转时，会先进入阻塞，并将阻塞消息
+                                  传递给路由根组件的getUserConfirmation方法。
+                                  由于是设置,所以重复执行该函数会覆盖前面的阻塞。
+                                  参数可以传递回调函数，回调函数的参数：1.location对象  2.action值
+                                   该回调函数的返回值，会作为阻塞的消息
+
+                            阻塞的消息会传给 根路由组件的getUserConfirmation属性的第一个参数
+
+                     这个block函数返回一个函数,用于取消阻塞
+
+
+                     阻塞比监听器先执行，如果不能跳转，监听器则不会执行
+
+                
+               路由根组件
+                   getUserConfirmation属性：值为函数
+                       参数1：阻塞的消息
+                       参数2：回调函数，该回调函数传递参数true，则表示进去新页面，否则，不做任何操作
+        
+        */
+    </script>
+</body>
+</html>

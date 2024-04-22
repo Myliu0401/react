@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="root"></div>
+    <script>
+        /* 
+                生命周期
+                    组件从出生到销毁的这个过程，就是生命周期，react在组件生命周期中提供一系列的钩子函数，也就是生命周期函数
+                
+                **只有类组件才有生命周期，函数组件基本没有生命周期，每次重新渲染时，相关的函数组件都会重新调用一次，旧的函数组件即刻被销毁**
+                  
+                类组件重新渲染只会执行render和其他钩子，不会像函数组件重新调用
+
+                旧版的生命周期
+                 ==================================================================
+                    初始化阶段
+                      constructor: 初始化阶段执行，初始化属性和状态
+                            1. 这个函数只执行一次，发生在 new 类型 阶段，也就是初始化阶段
+                            2. 在这个钩子中，不能执行setState函数，因为执行setState会重渲染，而在初始化阶段中，组件实例尚未构建和初始化尚未完成。
+                  =================================================================
+                    挂载阶段
+                      componentWillMount: 组件虚拟dom即将挂载到页面，构建虚拟dom前执行
+                            1. 正常情况下，和构造函数一样，只会运行一次，有一些特殊情况，后面学。
+                            2. 可以使用setState，但是为了避免bug，不允许使用，因为在某些特殊情况下，该函数可能被调用多次
+                            
+                      render: 组件渲染虚拟dom, 这个阶段会构建虚拟dom
+                            1. 返回一个虚拟dom，会将其挂载到虚拟dom树中，最终渲染到页面的真实dom中
+                            2. 只要重新渲染时，render就会重新运行
+                            3. 严禁使用setState,因为会可能会导致无限递归渲染
+
+                      componentDidMount: 虚拟dom渲染完成，并且生成真实dom挂载到页面
+                            1. 只会执行一次
+                            2. 可以使用setState
+                            3. 通常会将请求，启动计时器等一开始就需要操作的，写到该钩子中
+                  ==================================================================
+                  进入激活状态
+                    更新阶段    属性或状态变化会触发更新
+                       componentWillReceiveProps: 属性变化时触发该钩子，并且会收到新的属性参数,只要属性重新赋值就会触发，无论值是否相同
+                               1.状态变化不会运行该钩子,只有属性变化才会运行该钩子
+                               2.会收到修改的属性参数
+                               3.真正的属性尚未修改
+                               4.不建议使用该函数，因为该函数可能会导致bug
+
+                       shouldComponentUpdate: 这个钩子返回true将重新渲染虚拟dom，返回false将结束，默认返回true
+                               1. 该钩子会收到两个参数 第一个参数新的属性    第二个参数是新的状态
+                               2. 真正的属性和状态尚未修改
+
+                       componentWillUpdate: 即将重新渲染组件虚拟dom
+                               1. 该钩子会收到两个参数 第一个参数新的属性    第二个参数是新的状态
+                               2. 真正的属性和状态尚未修改
+
+                       render：组件渲染虚拟dom
+
+                       componentDidUpdate: 虚拟dom重新渲染完毕并且挂载到页面成为真实dom
+                               1. 该钩子会收到两个参数  第一个参数之前的属性   第二个参数是之前的状态
+                               2. 真正的属性和状态已经被修改
+                  ====================================================================
+                    销毁阶段
+                      componentWillUnmount：组件即将被销毁
+                               1. 通常会在该组件中销毁一些组件依赖的资源，如定时器等
+
+
+                            
+                  
+                  新版的生命周期
+                  =====================================================================
+                      初始化阶段
+                          constructor: 初始化状态和属性
+                             与旧组件的生命周期一样，new 类时 执行,初始化阶段执行，且只执行一次
+
+                  =====================================================================
+                      挂载阶段
+                          static getDerivedStateFromProps  这个钩子为静态属性
+                            初始化完成后会立即调用这个钩子
+
+                          render：组件渲染虚拟dom 这个阶段会构建虚拟dom
+                            1. 返回一个虚拟dom，会将其挂载到虚拟dom数中，最终渲染到页面的真实dom中
+                            2. 只要重新渲染时，render就会重新运行
+                            3. 严禁使用setState,因为会可能会导致无限递归渲染
+
+                          componentDidMount: 虚拟dom已经挂载到页面称为真实dom
+                            1. 只会执行一次
+                            2. 可以使用setState
+                            3. 通常会将请求，启动计时器等一开始就需要操作的，写到该钩子中
+
+                  =====================================================================
+                      更新阶段
+                          static getDerivedStateFromProps  这个钩子为静态属性
+                              属性和状态变化，会触发该钩子，并且传递两个参数  第一个参数是新的属性   第二个是新的状态
+                              真正的属性和状态尚未改变
+                              这个钩子的返回值如果是null,将不会改变状态，如果是其他，会覆盖掉状态
+                              
+                          shouldComponentUpdate  
+
+                          render
+
+                          getSnapshotBeforeUpdate:获取更新前的快照
+                              1.真实dom构建完成,但还未实际渲染到页面中
+                              2.在该函数中，通常用于实现一些附加的dom操作
+                              3.该函数的返回值，会作为componentDidUpdate的第三个参数
+
+                          componentDidUpdate
+
+
+                  =====================================================================
+                      销毁阶段 
+                        componentWillUnmount：组件即将被销毁
+                         
+
+
+                    
+                 ==========================================================================
+                   新组件去掉三个生命周期钩子
+                               componentWillMount : 去掉的原因是，该钩子有可能有执行多次，并且不好解决
+                               componentWillReceiveProps : 由于可以利用该钩子进行对数据的双重影响，可能导致数据非常混乱。
+                                    如: 父组件修改状态，子组件利用该钩子，对自己的状态进行修改，与父组件的状态保持同步，但可能引起数据极其混乱。
+                                    react官方认为，某个数据的来源必须是单一的。
+
+                               componentWillUpdate ： 已经增加了static getDerivedStateFromProps 静态钩子，所以这个钩子没必要了
+                              
+
+                          
+
+        
+        
+        */
+    </script>
+    <script src="https://unpkg.com/react@16/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+    <script src="./components/OldLifeCycle/My2.jsx" type="text/babel"></script>
+    <script type="text/babel" src="./components/OldLifeCycle/My1.jsx"></script>
+    <script type="text/babel">
+          const root = document.getElementById('root');
+
+          ReactDOM.render((<My1></My1>),root);
+    
+    </script>
+</body>
+</html>

@@ -1,0 +1,16 @@
+.layout{
+   display: flex;
+}
+
+.layout .layout_left{
+     
+}
+
+.layout .layout_main{
+    flex-grow: 1;
+    flex-shrink: 1;
+}
+
+.layout .layout_right{
+
+}

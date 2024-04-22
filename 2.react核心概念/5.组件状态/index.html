@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="root"></div>
+    <script>
+        /* 
+                     组件状态
+                         组件状态：组件可以自行维护的数据，相当于就是属于自己的数据，自己操控该数据
+                         组件状态仅在类组件中有效，组件状态为 state,本质上是类组件的一个属性，是一个对象。
+                         组件状态必须先初始化
+                            如: 
+                               constructor(props) {
+                                       super(props);
+
+                                       //进行初始化
+                                       this.state = { };   必须对state赋值为一个对象
+                               };
+                            该state中的数据的属于该类组件自己的数据，所有权归该类组件
+
+                         
+                     状态的变化
+                         不能直接改变状态：因为react无法监控到状态的变化
+                            如: this.state.num = 123; //不能这样更改数据
+                         必须使用 this.setState({})来该变状态，一旦调用了 this.setState,会导致当前组件重新渲染。
+                             调用 this.setState,会将参数对象与 this.state对象 进行混合，有相同的数据就会被覆盖。
+                             this.setState函数内部会再次调用 render函数，进行重渲染。
+
+
+                     组件中的数据
+                         1. props: 该数据是有组件的使用者传递的数据，所有权不属于组件自身，因此组件无法改变该数据
+                         2. state: 该数据是有组件自身创建的，所有权属于组件自身，因此组件有权改变该数据
+
+        
+        
+        */
+    </script>
+    <script src="https://unpkg.com/react@16/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+    <script type="text/babel" src="./components/MyClassComp.jsx"></script>
+    <script type="text/babel" src="./components/Tclik.jsx"></script>
+    <script type="text/babel">
+           const root = document.getElementById('root');
+
+           ReactDOM.render((<React.Fragment><Tclik time={1000}></Tclik><MyClassComp></MyClassComp></React.Fragment>),root);
+    </script>
+</body>
+</html>

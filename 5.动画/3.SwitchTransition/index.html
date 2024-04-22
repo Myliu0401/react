@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        *{
+            margin: 0px;
+            padding: 0px;
+        }
+        :root,body{
+            width: 100%;
+            height: 100%;
+        }
+        #root{
+            width: 500px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+
+        .appear-active{
+            opacity: 1 !important;
+            transition: all 2s;
+        }
+        
+        .exit-active{
+            transition: all 2s;
+            opacity: 0;
+        }
+        .enter,.appear {
+            opacity: 0;
+        }
+        .enter-active{
+            transition: all 2s;
+            opacity: 1;
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+</head>
+<body>
+    <div id="root"></div>
+    <script>
+        /* 
+                   SwitchTransition组件 用于有秩序的切换内部组件
+                       属性 mode:'out-in'|'in-out'  
+                               out-in为默认值
+                        
+                     out-in
+                         1.当key值改变时，会将之前的DOM根元素添加退出样式 （exit、exit-active）
+                         2.退出完成后，将该DOM元素移除
+                         3.重新渲染内部DOM元素
+                         4.为新渲染的DOM根元素添加进入样式 （enter、enter-active、enter-done）
+
+                     in-out
+                         1.重新渲染内部DOM根元素，保留之前的元素
+                         2.为新渲染的DOM根元素添加进入样式 （enter、enter-active、enter-done）
+                         3.将之前的DOM根元素添加退出样式 （exit、exit-active）
+                         4.退出完成后，将该DOM元素移除
+
+
+                     内部的原理： 
+                     out-in
+                        通过ReactDOM.findDOMNode函数  这个函数来找到旧DOM跟元素，将其添加样式并渲染出来，timeout时间完毕后将其销毁，然后再渲染新DOM并且添加样式。
+
+                     in-out
+                        新旧DOM一起渲染出来，并未新dom添加进入样式，进入完毕后为旧DOM添加退出样式，旧DOM退出完毕后，并将旧DOM删掉。
+        
+        
+        
+         */
+    </script>
+    <script src="https://unpkg.com/react@16/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+    <script src="https://unpkg.com/react-transition-group/dist/react-transition-group.js"></script>
+    <!-- <script src="./index.jsx" type="text/babel"></script> -->
+    <script src="./index1.jsx" type="text/babel"></script>
+    <script type="text/babel">
+        const useState = React.useState;
+        const root = document.getElementById('root');
+        ReactDOM.render((<App />),root);
+    </script>
+</body>
+</html>

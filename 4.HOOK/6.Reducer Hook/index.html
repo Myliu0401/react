@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="root"></div>
+    <script>
+        /* 
+               Reducer Hook   
+                    
+                     1.react规定了数据必须是单向流动的。
+                     2.数据存储在数据仓库中（目前可以将 state 认为是一个存储数据的仓库）。
+                     
+                 Reducer 改变数据的方式，是一种规范。 （与vuex修改数据逻辑差不多）
+                   Reducer规范：
+                      1.action是改变数据的唯一原因 (本质上action就是一个对象，该对象有两个属性)
+                            属性： type: 字符串，动作的类型 
+                                        数据将进行怎样的变化  如：该数据将是 减 还是 加
+                                  
+                                  payload:任意类型，动作发生的附加信息 （负荷，跟vuex一样）
+                        
+                        例子： 如添加一个学生，action对象可以描述为：
+                                { type:'addStudent',payload:{学生对象的各种信息} }
+
+                              如删除一个学生,action对象可以描述为：
+                                { type:'deleteStudent',payload:学生的id }
+                            
+                      2.具体改变数据的是一个函数，该函数叫做 reducer
+                          该函数接收两个参数： 
+                                    state:表示当前数据仓库中的数据
+                                    action:描述了如何改变数据，以及改变数据需要的一些附加信息
+                          该函数根据action对象里的信息进行修改数据。
+                          该函数必须有一个返回结果，用于表示数据仓库变化之后的数据（修改后的数据结果）
+                              如果返回结果是对象，必须创建新的对象
+                          reducer必须是纯函数，不能有任何副作用
+                        
+                      3.如果要触发reducer函数，不可以直接调用，而是应该调用一个辅助函数 dispatch
+                           该函数仅接收一个参数： action
+                           在该函数中去直接调用reducer函数，以达到改变数据的目的
+
+                  useReducer Hook 就是来抽离 修改数据的函数，将其从组件函数中抽离出去，使函数组件更加简单。
+                     useReducer函数传递三个参数： 
+                           1. reducer函数 
+                           2. 数据的初始状态 （也就是即将放进仓库中的数据）
+                           3. 回调函数 该函数的返回值将会做为 数据的初始状态  该函数会接收一个参数，该参数为 初始数据
+                               第三个函数可传可不传
+                    
+                     useReducer的返回值 还是遵守 Hook规范 返回一个数组，第一项为数据，第二项为dispatch函数
+
+                                              
+                     
+        
+        
+        */
+    </script>
+    <script src="https://unpkg.com/react@16/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+    <script src="./index.jsx" type="text/babel"></script>
+    <script type="text/babel">
+           const useState = React.useState;
+           const root = document.getElementById('root');
+
+           ReactDOM.render((<App/>),root);
+
+
+    </script>
+</body>
+</html>

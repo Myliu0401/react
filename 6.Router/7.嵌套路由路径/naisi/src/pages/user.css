@@ -1,0 +1,10 @@
+.user {
+    width: 100%;
+    height: calc(100% - 60px);
+}
+
+
+.user .user-sidebar {
+    width: 200px;
+    height: 100%;
+}

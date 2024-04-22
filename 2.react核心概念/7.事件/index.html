@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="root"></div>
+    <script>
+        /* 
+               事件
+                  在react中,组件的事件，本质上就是一个属性
+
+                  按照之前react对组件的约定，由于事件本质上是一个属性,因此也需要使用小驼峰命名法
+                     react是否是组件，的判断是根据首字母大小写来判定是否是内置组件，如果是内置组件，该组件的属性 react就会使其与dom的属性一一对应。 但是受react命名约定的影响，同样必须使用驼峰
+                     如果是自定义组件那么就会执行对应的  类或函数  获得其返回值。
+
+
+                如果没有特殊处理,在事件处理函数中,this指向undefined
+                  由于react会将类中原型上的所有事件处理函数的this置为undefined,所以需要进行特殊处理
+                  react在new类后获得类对象后会对该类对象原型上所有事件处理函数的this置为undefined 
+                  **如果没有特殊处理，在事件处理函数中，this指向undefined**
+                      1.使用bind函数,绑定this
+                      2.使用箭头函数
+                        如：
+                        class a {
+
+                            //这种语法使该函数不会赋值在原型，而是在this对象中
+                            abc = ()=>{
+
+                            }
+                        }
+                  
+                react函数中，this指向undefined的原因：
+                  this为undefined的原因是跟事件函数调用有关，如果是在原型上，html事件进行调用后 this为dom元素，所以被react置为undefined,如果是通过属性传进来
+                  在事件处理函数中，通过props.xxx 调用该组件那么this为props,this就不属于原组件实例，所以react将其置为undefined，等等原因。
+                  跟调用有关系。
+
+                              
+        
+        */
+    </script>
+    <script src="https://unpkg.com/react@16/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+    <script src="./components/Tick.jsx" type="text/babel"></script>
+    <script src="./components/MyTick.jsx" type="text/babel"></script>
+    <script type="text/babel">
+             const root = document.getElementById('root');
+             ReactDOM.render(<MyTick number={10}></MyTick>,root);
+             
+    </script>
+</body>
+</html>

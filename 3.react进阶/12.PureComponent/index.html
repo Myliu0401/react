@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        :root,body{
+            width: 100%;
+            height: 100%;
+        }
+        *{
+            margin: 0px;
+            padding: 0px;
+        }
+        ul{
+            list-style: none;
+            position: relative;
+            left: 50%;
+        }
+        li{
+            margin: 5px 0px;
+            font-size: 20px;
+        }
+        .finite{
+           color: #008c8c;
+           font-weight: bold;
+        }
+
+
+    </style>
+</head>
+<body>
+    <div id="root"></div>
+    <script>
+        /* 
+              PureComponent   纯组件
+                       纯组件，用于避免不必要的渲染(也就是不运行render函数)，从而提高效率。
+                       纯组件，会进行优化，如果一个组件的属性和状态，都没有发生变化，那么就不会进行重新渲染。
+                    PureComponent是一个组件，该组件在 React身上，如果某个组件继承自该组件，那么该组件的shouldComponentUpdate会被进行优化，
+                     对属性和状态进行浅比较，如果相等则不会重新渲染，(也就是shouldComponentUpdate函数返回false)
+                     如： class A extends React.PureComponent{  }; A 组件继承自纯组件，那么A组件的shouldComponentUpdate钩子就会被进行优化。
+                  
+                   PureComponent组件的原理：
+                    class PureComponent extends React.Component{
+                         constructor(props){
+                             super(props);
+                         }
+
+                         shouldComponentUpdate(){
+                              if(旧属性===新属性 && 旧状态 === 新状态){
+                                    return false
+                              }
+                              return true
+                         }
+                    };   PureComponent组件的原型上有该shouldComponentUpdate方法，那么继承该组件的类，的原型就跟它一样
+
+                    只进行浅比较的原因，如果进行深比较那么效率就变成更低了（得递归循环判断）
+
+                
+                注意： 
+                   1. PureComponent进行的是浅比较
+                       1.为了效率，类组件应该继承自PureComponent
+                       2.因为是进行浅比较，所以要求不要改动之前的状态，永远是创建新的状态覆盖之前的状态
+                   2. 如果是函数组件，使用React.memo高阶组件制作纯组件
+                       如: const 纯组件 = React.memo(函数组件)
+
+                       React.memo高阶函数返回的是一个类组件，原理: 
+                          function memo(funcComp){
+                              
+                               return class xxx extends React.PureComponent{
+                                   constructor(props){
+                                      super(props);
+                                    }
+
+                                   render(){
+                                       return (<>
+                                           { funcComp(this.props) }
+                                       </>)
+                                   }
+                               }
+                          }
+                           
+                         
+
+                
+
+        
+        
+        
+        */
+       
+    </script>
+    <script src="https://unpkg.com/react@16/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+    <script src="https://unpkg.com/prop-types@15.6/prop-types.js"></script>
+    <script src="./component/auxiliaryOptimization.js"></script>
+    <script src="./component/task.jsx" type="text/babel"></script>
+    <script src="./component/Takslist.jsx" type="text/babel"></script>
+    <script src="./component/tasksInput.jsx" type="text/babel"></script>
+    <script src="./component/container.jsx" type="text/babel"></script>
+    <script type="text/babel">
+            const root = document.getElementById('root');
+
+
+            ReactDOM.render((<Container></Container>),root);
+
+
+
+            function A(){
+
+            };
+
+            A.__proto__.a=()=>{
+                console.log(123)
+            };
+
+            A.prototype.a = ()=>{
+                console.log(10)
+            };
+     
+
+            class B extends A{
+                constructor(props){
+                   super(props);
+                };
+
+                a(){
+                    console.log(456)
+                }
+            }
+    
+    </script>
+</body>
+</html>

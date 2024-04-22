@@ -1,0 +1,22 @@
+.sidebar{
+  width: 190px;
+  background-color: #abcdef;
+  height: 100%;
+}
+
+
+.sidebar .sidebar_ul{
+
+}
+
+.sidebar .sidebar_ul .ul_item{
+    padding: 10px;
+    text-align: center;
+    cursor: pointer;
+    background-color: transparent;
+    transition: all 0.3s;
+}
+
+.sidebar .sidebar_ul .ul_item:hover{
+  background-color: rgb(199, 210, 219);
+}

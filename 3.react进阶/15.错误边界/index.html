@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="root"></div>
+    <script>
+        /* 
+                  错误边界
+                     默认情况下，若一个组件在渲染期间(也就是render期间)发生错误，会导致整个组件树全部被卸载，也就是页面什么都不显示。
+                     如果一个组件render期间出现错误，会将错误往上一层组件抛，上一层如果没有处理，那么会继续往上抛，到根组件，从错误组件开始一层一层销毁，最后到根组件销毁。
+
+                     错误边界：是一个组件，该组件用来专门捕获渲染期间(render)，子组件发生的错误，并有能力阻止错误往上传。
+
+                     让错误边界组件捕获错误： 
+                          生命周期函数: getDerivedStateFromError
+                             1. 该函数为静态函数
+                             2. 该函数运行的时间点: 渲染子组件的过程中，发生错误之后，在更新页面之前。
+                                    （也就是子组件在渲染过程中出现错误后，react就会调用该钩子）
+                             3. **只有子组件发生错误，才会运行该钩子**
+                             4. 该函数返回一个对象，react会将该对象的属性覆盖掉当前组件的state
+                                 (覆盖掉后会重新运行该组件的render,重新渲染)
+                             5. 该函数有一个参数为 错误对象
+                             6. 该钩子通常用于改变状态
+
+                          生命周期函数：componentDidCatch
+                             1. 该函数为实例方法
+                             2. 该函数运行的时间点：渲染子组件的过程中，发生错误，并且更新页面之后，由于运行时间点靠后，因此不太会在该钩子中改变状态
+                                (整个组件树被销毁后，才会运行该钩子,会重新构建虚拟dom树)
+                             3.通常，该函数用于记录错误消息
+                               该函数有两个参数 error, errorInfo
+
+
+                            
+                         细节： 
+                           某些错误，错误边界组件无法捕获
+                            1.自身的错误
+                            2.异步的错误
+                            3.事件中的错误
+
+                            总结: 仅捕获渲染子组件期间的同步错误
+           
+        
+        
+        */
+    </script>
+    <script src="https://unpkg.com/react@16/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+    <script src="./index.jsx" type="text/babel"></script>
+    <script type="text/babel">
+         const root = document.querySelector('#root');
+
+         ReactDOM.render((<App></App>),root);
+    </script>
+</body>
+</html>

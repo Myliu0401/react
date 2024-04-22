@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <link rel="stylesheet" href="./index2.css">
+    <style>
+        .exitDone{
+            display: none;
+        }
+        .my{
+          height: 100px;
+     }
+    </style>
+</head>
+<body>
+    <div id="root"></div>
+    <script>
+
+        /* 
+                       CSSTransition  组件
+                            
+                             当进入时，发生： 
+                                 1.为CSSTransition内部的DOM根元素 添加样式enter
+                                 2.在下一帧（enter样式已经完全应用到了元素），立即为该元素添加样式enter-active
+                                 3.当timeout结束后，去掉之前的样式，添加样式enter-done
+
+                             当退出时，发生：
+                                 1.为CSSTransition内部的DOM根元素 添加样式exit
+                                 2.在下一帧（exit样式已经完全应用到了元素），立即为该元素添加样式exit-active
+                                 3.当timeout结束后，去掉之前的样式，添加样式exit-done
+                                
+                         设置classNames属性，可以指定类样式的名称
+                              1.字符串：为类样式添加前缀
+                              2.对象：为每个类样式指定具体的名称（非前缀）
+
+                         如果设置 appear 属性：
+                           关于首次渲染时的类样式，appear、apear-active、apear-dong 
+                           和enter的唯一区别在于完成时，会同时加入 apear-dong 和 enter-dong 
+
+                         还可以与Animate.css联用
+        
+        
+        
+        */
+    </script>
+    <script src="https://unpkg.com/react@16/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+    <script src="https://unpkg.com/react-transition-group/dist/react-transition-group.js"></script>
+   <!--  <script src="./index.jsx" type="text/babel"></script> -->
+   <!-- <script src="./index1.jsx" type="text/babel"></script> -->
+   <script src="./index2.jsx" type="text/babel"></script>
+    <script type="text/babel">
+          const useState = React.useState;
+          const root = document.getElementById('root');
+          ReactDOM.render((<App />),root);
+    </script>
+</body>
+</html>

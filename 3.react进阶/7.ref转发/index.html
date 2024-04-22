@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="root"></div>
+    <script>
+        /*  
+            ref转发
+               传递ref，是组件外得到组件内的ref,因为是同一个对象
+               React.forwardRef方法
+                   参数
+                    1.第一个参数传递函数组件，不能是类组件，并且，函数组件需要有第二个参数来收到ref
+                   
+                   返回值
+                     返回一个新的组件
+                   
+                 这个返回的新组件，内部会执行传给forwardRef函数的第一个参数函数，并且会传递两个参数进去，第一个为 props  第二个为ref
+                 当使用返回值这个组件，并且传递属性和ref，这些属性就会传给参数函数。
+        
+        
+        
+        */
+
+
+    </script>
+    <script src="https://unpkg.com/react@16/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+    <script type="text/babel">
+          function A(props,ref){
+               return (<h1 ref={ref}>{props.nice}</h1>);
+          };
+          const NewA = React.forwardRef(A);
+          
+          class Nice extends React.Component{
+              constructor(props){
+                     super(props);
+
+                     this.refA = React.createRef();
+              };
+     
+              componentDidMount(){
+                  console.log(this)
+              }
+
+              render(){
+                  return (<div>
+                      <NewA ref={this.refA} nice='hello world'></NewA>
+                    </div>)
+              }
+          };
+
+         const root = document.getElementById('root');
+
+         ReactDOM.render((<Nice></Nice>),root);
+
+
+    </script> 
+</body>
+</html>

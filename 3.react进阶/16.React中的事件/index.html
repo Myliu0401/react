@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="root"></div>
+    <script>
+         /* 
+                    React中的事件 
+                       这里的事件：React内置的DOM组件中的事件。
+
+                       react把几乎所有内置组件dom的事件注册在document上，因为如果给页面每个真实dom添加各种样的事件，会导致事件繁多，导致执行效率更低。
+
+                       1. 给document注册事件
+                             利用事件委托，给最高一层的document注册事件，在document中进行处理。
+                       
+                       2.几乎所有的元素的事件处理，都在document的事件中处理
+                            1. 一些不冒泡的事件，是直接在元素上监听的 （如：聚焦事件等等）
+                            2. 一些document上面没有的事件，直接在元素上监听 （如: input、播放、暂停 等等事件）
+                    
+                       3.在document的事件处理，React会根据虚拟DOM树，来完成事件函数的调用
+                            react会有一个事件队列，把虚拟dom树添加的事件函数，都加到该事件队列中，等到冒泡到document的事件后，会循环该事件队列依次执行处理函数。
+                            会从树尾事件处理函数开始执行到树根处理函数。
+                            **react会判断是那颗组件树触发的事件，然后就执行事件队列那颗组件树的dom事件**。
+                        
+                       4. React的事件参数对象，并非真实的DOM事件参数对象，而是React合成的一个对象，该对象类似于真实DOM的事件参数
+                             1. stopPropagation, 阻止事件在虚拟DOM树中的冒泡。
+                                原理： 
+                                  for(let index in react中的事件队列.那颗组件树){
+                                      if(e.是否阻止冒泡/捕获){
+                                          break;
+                                      }
+                                      arr[index](e)
+                                  };
+                                  会阻止掉react事件队列中后续的事件的执行
+
+                             2. nativeEvent 可以得到真实的DOM事件对象
+
+                             3. 为了提高执行效率，React使用事件对象池来处理事件对象
+                                 （为了减少内存，事件对象会被重用，事件处理函数执行完后，事件对象里的属性会被置为null,等到下个函数触发，事件对象里的属性就会重新赋值）
+
+
+                     注意：
+                       1.如果给真实DOM注册事件，并阻止了事件冒泡，则会导致react的相应事件无法触发
+                       2.如果给真实DOM注册事件，事件会先于react事件运行
+                       3.通过react的事件中阻止事件冒泡，无法阻止真实DOM事件冒泡
+                       4.可以通过 nativeEvent.stopImmediatePropagation() 阻止document上剩余的事件的执行
+                          如：同一个元素的onclick注册了多个处理事件，那么只会执行一个，剩余的不执行
+                       5.在事件处理程序中，不要异步的使用事件对象，如果一定要使用，需要调用事件对象中的persist函数
+                           调用persist函数，react的事件对象就会被持久化，相当于执行异步函数时又会被事件对象里的属性又会被重新赋值
+                              
+         */     
+    </script>
+    <script src="https://unpkg.com/react@16/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+    <script src="./index.jsx" type="text/babel"></script>
+    <script type="text/babel">
+       const root = document.getElementById('root');
+
+       ReactDOM.render((<Index></Index>),root);
+       document.addEventListener('click',()=>{
+           console.log('++++++++')
+       });
+    </script>
+</body>
+</html>

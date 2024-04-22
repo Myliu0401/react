@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        /* 
+                history对象
+                   该对象提供了一些方法，用于控制和监听地址的变化。
+                   该对象不是 window.history对象， 而是一个重新封装的对象，它提供统一的API接口，封装了具体的实现。
+                   
+                   createBrowserHistory 生成 控制浏览器真实地址的 history对象
+                   createHashHistory 生成  控制浏览器hash的history对象
+                   createMemoryHistory 生成 控制内存中地址数组的history对象
+                   
+                   上面这三个api 生成的 history对象的共同特点：维护了一个地址栈
+                   这三个api生成的 history对象结构完全一样
+
+                 第三方库：history
+                    这个库拥有了上面三个api。
+                 
+                 history对象：属性
+                     action: 当前地址栈，最后一次操作的类型
+                         如果是通过createXXXHistory函数新创建的history对象，action固定为POP
+                         调用了history的push方法，action变为PUSH
+                         调用了history的replace方法,action变为REPLACE
+                    
+                     push:向当前地址栈，入栈一个地址，同时指针指向该地址
+                     replace:替换指针指向的地址
+                     go:控制当前地址栈指针偏移，如果是0，地址不变；如果是负数，则后退指定的步数；如果是正数，则前进指定的步数。
+                         浏览器的history对象的go方法,如果参数为0,那么会刷新浏览器。
+                     length:当前栈中的地址数量
+                     goBack:相当于go(-1)
+                     goForward:相当于go(1)
+                     location:表达当前地址中的信息
+                     listen:函数，用于监听地址栈指针的变化 （该函数是添加一个监听器，如果执行多次那么会添加多个）
+                        该函数接收一个函数作为参数，该参数表示地址变化后要做的事情，指针变化后触发该函数
+                           参数函数接收两个参数： 
+                               1.location:记录了新的地址
+                               2.action:进入新地址的方式
+                                   POP:指针移动，调用了go、goBack、goForward、用户点击浏览器前进后退按钮
+                                   PUSH:调用history.push
+                                   REPLACE:调用history.replace
+                        该listen函数有一个返回值，返回一个函数，执行该返回值，会取消监听。
+                     
+                     block:用于设置一个阻塞，当页面发生跳转时。会触发getUserConfirmation函数，并且将消息作为参数传递getUserConfirmation函数。
+                        该block函数接收一个字符串作为参数，表示消息的内容，也可以接收一个函数作为参数，函数的返回值是消息内容
+                        该block函数返回一个函数，执行该返回值，会解除阻塞。
+                      该函数时设置一个阻塞，如果执行多次，那么会覆盖掉之前的。
+                        必须设置阻塞后，getUserConfirmation方法该有用
+                    
+                     createHref:basename+url
+
+
+                
+              createBrowserHistory函数的匹配对象
+                   basename:设置跟路径。 如果有设置了，那么每次跳转地址后，新地址的根路径都是该地址
+                   forceRefresh:地址改变时是否强制刷新页面
+                   keyLength:location对象中key值的长度
+                       地址栈中记录的并非字符串，而是一个location对象
+                       因为有可能有重复的地址，所以location对象里的属性都一样，加上key之后，新的location对象与旧的location对象，开发者就可以根据key值来判断了。
+                   getUserConfirmation:一个函数，该函数当调用history对象的block函数后，发生页面跳转时运行
+        
+
+              createHashHistory函数的匹配对象
+                   hashType:#号后给定的路径格式
+                       hashbang:已经被谷歌弃用，格式为 #!路径
+                       noslash: #a/b/c
+                       slash: #/a/b/c
+
+
+              createMemoryHistory函数的匹配对象
+                   配置对象：详见memoryHistory.js
+
+
+
+
+         
+         ====================================================================== 
+              createXXXHistory函数返回的 history对象中location里的 state属性的处理如下：
+                        
+ 
+
+
+
+        */
+    </script>
+</body>
+</html>

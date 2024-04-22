@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <div id="root"></div>
+  <div class="root_1"></div>
+
+  <!-- react核心库 -->
+  <script src="https://unpkg.com/react@16/umd/react.development.js"></script>
+
+  <!-- react-dom库 -->
+  <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+
+  <!-- babel -->
+  <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+  <script>
+    /* 
+               react.js                  react的核心库，与宿主环境无关
+               react-dom.js              依赖于核心库，将核心的功能与页面结合，主要的作用是将核心库的功能与页面进行结合
+    
+               
+             react-dom这个库提供了一个 ReactDOM对象
+                ReactDOM对象里的属性
+                       render函数：参数： 第一个参数是元素要显示的东西(可以是字符串、数字或react元素)、第二个参数为容器
+                         会把第一个参数渲染进去第二个参数的节点中，最终渲染在页面
+
+            
+             react这个库提供了一个 React对象
+                React对象里的属性
+                       createElement函数： 参数： 第一个为元素的类型(如是字符串,一个普通的html元素名)、第二个为元素的特性(一个对象)、第三个开始为元素的子接点(如果是元素节点,必需是react元素)
+                          这个方法会创建一个 React元素，称为虚拟dom，而不是真正的dom，本质上是一个对象。
+                    
+                       
+            
+            JSX
+              JS的扩展语法，需要进行babel进行转义
+    
+    
+    */
+
+
+    //创建一个react元素
+    const span = React.createElement('span', {
+      className: 'span'
+    }, '我是span元素');
+
+    const button = React.createElement('button', {disabled:true}, '点击')
+ 
+
+    //创建一个react元素
+    const h1 = React.createElement('h1', { title: '这是一个hello world' }, 'hello world', button);
+
+
+    ReactDOM.render(h1, document.getElementById('root'));
+
+  </script>
+  <script type="text/babel">
+    const babelH1 = <h1>hello world<span>我是一个babel</span><A1></A1></h1>;
+    function A1(){
+      return null
+    }
+    console.log(babelH1)
+    const root_1 = document.querySelector('.root_1');
+
+    ReactDOM.render(babelH1, root_1);
+
+   console.log(<span onClick={()=>{console.log('3213124312')}}>1231</span>)
+  </script>
+</body>
+
+</html>

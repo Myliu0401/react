@@ -1,0 +1,18 @@
+
+
+
+.layout{
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.layout .layout_header{
+   width: 100%;
+}
+
+.layout .layout_main{
+   flex-grow: 1;
+   width: 100%;
+}

@@ -1,0 +1,215 @@
+.paging{
+   display: flex;
+   align-items: center;
+   color: #222222;
+   margin: 0 auto;
+}
+
+.paging .paging_text{
+
+}
+
+.paging .paging_selection{
+  position: relative;
+  display: flex;
+  align-items: center;
+  margin: 0px 10px;
+  width: 125px;
+  height: 28px;
+  box-shadow: 0px 0px 2px rgb(128, 128, 128);
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+
+.paging .paging_selection .boxIcon{
+  position: absolute;
+  font-style: normal;
+  right: 17px;
+  transform: rotate(0deg);
+  transition: 0.3s all;
+}
+
+.paging .paging_selection .selection_span .boxIcon{
+  transform: rotate(90deg);
+}
+
+
+.paging .paging_selection .selection_span{
+  margin: 0px;
+  display: inline-block;
+  width: 100%;
+  padding-left: 20px;
+}
+
+.paging .paging_selection .paging_selectionBox{
+   position: absolute;
+   width: 100%;
+   padding: 10px 0px;
+   background-color: #fff;
+   top: 36px;
+   box-shadow: 0px 0px 2px rgb(148, 148, 148);
+   border-radius: 5px;
+   display: none;
+
+}
+
+.paging .paging_selection .paging_selectionBox.open{
+  display: block;
+}
+
+.paging .paging_selection .paging_selectionBox .selectionBox_item{
+  padding: 2px 7px;
+
+}
+
+.paging .paging_selection .paging_selectionBox .selectionBox_item.item_active{
+  background-color: rgba(199, 199, 199, 0.5);
+  color: rgb(38, 150, 202);
+}
+
+.paging .paging_selection .paging_selectionBox .selectionBox_item:not(.item_active):hover{
+   background-color: rgba(199, 199, 199, 0.5);
+   cursor: pointer;
+}
+
+
+
+/* ============================================= */
+
+
+.paging .selection_input{
+  outline: none;
+  width: 100px;
+  padding: 6px 7px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  margin: 0px 10px;
+  transition: 0.3s all;
+} 
+
+.paging .selection_input:focus{
+    border: 1px solid rgb(102, 161, 216);
+}
+
+/* ================================= */
+
+.paging .paging_pagArea{
+     display: flex;
+}
+
+.paging .paging_pagArea .direction{
+     display: flex;
+}
+
+.paging .paging_pagArea .direction:first-child .direction_item:first-child{
+     background-color: #2ecc71;
+     color: #fff;
+}
+
+/* .paging .paging_pagArea .direction:first-child .direction_item:first-child::before{
+  content: '';
+  position: absolute;
+  width: 0px;
+  height: 0px;
+  border: 18px solid transparent;
+  border-top-color: transparent;
+  border-bottom-color: transparent;
+  border-left-color: transparent;
+  border-right-color: #2ecc71;
+  left: -35px;
+  top: -1px;
+} */
+
+.paging .paging_pagArea .direction:last-child .direction_item:last-child{
+  background-color: #2ecc71;
+  color: #fff;
+}
+
+/* .paging .paging_pagArea .direction:last-child .direction_item:last-child::after{
+  content: '';
+  position: absolute;
+  width: 0px;
+  height: 0px;
+  border: 18px solid transparent;
+  border-top-color: transparent;
+  border-bottom-color: transparent;
+  border-left-color: #2ecc71;
+  border-right-color: transparent;
+  right: -36px;
+  top: -1px;
+} */
+
+.paging .paging_pagArea .direction .direction_item{
+  padding: 0px 12px;
+  margin: 0px 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  font-size: 21px;
+  background-color: #2ecc71;
+  color: #fff;
+  cursor: pointer;
+}
+
+.paging .paging_pagArea .direction .direction_item.disable{
+  cursor: no-drop;
+}
+
+
+.paging .paging_pagArea .direction .item1{
+  border: 2px solid #2ecc71;
+  background-color: #fff;
+  color: #2ecc71;
+}
+
+/* ======================================== */
+
+.paging .paging_pagArea .pagArea_selectionBox{
+  display: flex;
+  font-size: 13px;
+}
+
+
+
+.paging .paging_pagArea .pagArea_selectionBox .item{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0px 10px;
+  cursor: pointer;
+  border-radius: 50%;
+  width: 33px;
+  height: 33px;
+}
+
+.paging .paging_pagArea .pagArea_selectionBox .item.active{
+  border: 3px solid #2ecc71;
+  font-weight: bold;
+
+}
+
+.paging .paging_pagArea .pagArea_selectionBox .item:not(.active):hover{
+  border: 3px solid #9ddbb7;
+  font-weight: bold;
+}
+
+.paging .paging_goToArea{
+
+}
+
+.paging .paging_goToArea .paging_text{
+
+}
+
+
+ul,li{
+  margin: 0px;
+  padding: 0px;
+  list-style: none;
+}
+
+*{
+  box-sizing: border-box;
+}

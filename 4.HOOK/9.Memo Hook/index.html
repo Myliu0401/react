@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="root"></div>
+    <script>
+        /* 
+                  Memo Hook 该 Hook 用来保持一些比较稳定的数据，通常用于优化性能。
+                     
+                     该 Hook 接收两个参数： 
+                             1. 回调函数    该回调函数的返回值会作为  数据返回出来
+                             2. 数组，记录依赖项
+                     该Hook 与 Callback Hook 差不多。
+
+                    useMemo 会将参数回调函数 的返回值 记录在状态表中，如果依赖项没有发生变化，则还是将状态表中对应的数据返回出来，而如果依赖项发生变化
+                             则会重新调用参数回调函数，将其的返回值覆盖掉状态表中对应的数据，并且返回出来。
+
+
+
+            ** react中，如果React元素本身没有发生变化（也就是引用，与上一次一样），则React一定不会重新渲染该节点 **
+        
+        
+        
+        */
+    </script>
+    <script src="https://unpkg.com/react@16/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+    <script src="./index.jsx" type="text/babel"></script>
+    <script type="text/babel"> 
+           const useState = React.useState;
+           const useMemo = React.useMemo;
+           const root = document.getElementById('root');
+
+           ReactDOM.render((<Test/>),root);
+    </script>
+</body>
+</html>

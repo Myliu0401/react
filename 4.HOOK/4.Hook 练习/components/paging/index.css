@@ -1,0 +1,58 @@
+.paging {
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+    height: 30px;
+}
+
+.paging .paging_andDown {
+    
+}
+
+/* .paging .paging_andDown .headAndTail {} */
+
+.paging .paging_andDown .andDown {
+    padding: 3px 7px;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+    margin: 0px 5px;
+    cursor: pointer;
+}
+
+.paging .paging_container {
+    display: flex;
+    list-style: none;
+    box-sizing: border-box;
+    margin: 0px;
+    padding: 0px;
+}
+
+.paging .paging_container .term {
+    box-sizing: border-box;
+    margin: 0px 10px;
+    padding: 3px 7px;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+    margin: 0px 5px;
+    cursor: pointer;
+}
+
+.paging .paging_container .term:not(.active):hover{
+    background-color: rgb(79, 119, 151);
+}
+
+.paging .paging_container .term.active{
+     border: none;
+     font-weight: bold;
+     color: red;
+}
+
+.paging .paging_andDown .andDown.disable{
+    cursor: no-drop;
+    background-color: #ccc;
+}
+
+.paging .paging_andDown .andDown:not(.disable):hover{
+    background-color: rgb(79, 119, 151);
+}

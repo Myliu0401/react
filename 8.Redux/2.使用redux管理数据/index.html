@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        /* 
+                  安装第三方库 redux
+                   
+                       createStore方法 
+                            该方法传递两个参数：第一个为reducer处理器，第二个为仓库数据的默认值
+                            该方法将返回一个仓库：store
+
+                            仓库里的属性：
+                                 getState方法  用于获取该仓库的数据
+                                 dispatch方法  传递一个action参数，用于修改数据
+
+                       applyMiddleware函数
+                            该方法的参数为中间件函数，可以拥有无限个中间件
+                        
+                        该函数的返回值为一个函数
+
+
+                       bindActionCreators
+        
+        
+                  ============================================================================
+                     action
+                        1.action是一个 plain-object（平面对象）
+                             也就是 action的__proto__指向Object.prototype
+                             action必须是一个简单对象
+                        2.通常，使用payload属性表示附加数据
+                        3.action中必须有type属性，该属性用于描述操作的类型
+                             但是，没有对type属性的类型做出要求
+                        4.在大型项目，由于操作类型非常多，为了避免硬编码（也就是直接写死），会单独创建一个文件将action的类型存放到该文件的变量中
+                        5.为了方便使用不同的action,通常会使用 action创建函数 来创建action
+                             action创建函数应该为无副作用的纯函数：
+                                不能以任何形式改动参数
+                                不可以有异步
+                                不可以对外部环境中的数据造成影响
+                        6.为了方便利用action创建函数来并进行分发，redux提供了一个函数 bindActionCreators,该函数用于增强action创建函数的功能，
+                          使它不仅可以创建action，并且创建后会自动完成分发。
+
+                    bindActionCreators函数传递两个参数： 
+                           第一个为 对象，对象中属性为action创建函数
+                           第二个为 分发函数 也就是 store.dispatch函数
+                     该函数会返回一个对象，对象中拥有更强版的action创建函数，执行增强版的action创建函数，会自动完成分发。
+                      相当于：
+                        function 增强版的action创建函数(props){
+                               const 原版的action创建函数 = (props)=>{
+                                    return {
+                                        type:'xxx',
+                                        payload:props
+                                    }
+                               };
+
+                               //进行分发
+                              return 分发(原版的action创建函数(props))
+                        };
+                     
+
+             =======================================================================================
+                reducer
+                   Reducer是用于改变数据的函数
+
+                   1. 一个数据仓库，有且仅有一个reducer，并且通常情况下，一个工程只有一个仓库，因此，一个系统，只有一个reducer
+
+                   2. 为了方便管理，通常会将reducer放到单独的文件中。
+                    
+                   3. reducer被调用的时机
+                      1. 通过 store.dispatch，分发一个action时会调用reducer
+                      2. 当创建一个 store时，会调用一次reducer  这次调用redux传给reducer函数的action参数的tpye属性值是随机的
+                           可以利用这一点。用 reducer初始化状态，就是创建仓库时，不传递任何默认状态，在 reducer的参数state设置一个默认值
+                           如： function reducer(state = 默认值,action){
+
+                           }
+
+                   4. reducer内部通常使用switch来判断 action对象的type属性值
+
+                   5. reducer必须是一个没有副作用的纯函数
+                      为什么需要纯函数                               
+                        1. 纯函数有利于测试和调试                  
+                        2. 有利于还原数据
+                        3. 有利于将来和react结合时的优化
+
+                        如果state被修改了，那么redux以前存的也被修改了，因为是同一个，以后查看以前的都是一个样，无法进行调试和还原
+                    
+                      具体要求
+                        1. 不能改变参数，因此要让状态变化，必须得到一个新的状态
+                        2. 不能有异步
+                        3. 不能对外部环境造成影响
+
+                   6. 由于在大中型项目中，操作比较复杂，数据结构也复杂，因此，需要对 reducer进行细分
+                       1. redux提供了方法，可以帮助我们更加方便的合并 reducer
+                       2. combineReducers: 该函数进行合并 reducer,得到一个新的 reducer,该新的reducer管理一个对象，该对象中的每一个属性交给对应的reducer进行管理
+
+
+             =============================================================================================
+                  store: 用于保存数据
+                    通过 createStore方法创建仓库对象
+                    仓库对象中的成员：
+                       dispatch: 分发一个action
+                       getState: 获取仓库中的当前状态
+                       replaceReducer: 替换掉当前仓库的reducer
+                       subscribe: 添加一个监听器，监听器是一个无参的函数，监听器会在分发一个action之后触发，该subscribe函数会返回一个取消当前注册的监听器。
+                       
+                          
+             ===================================================================================================
+                   中间件
+                     类似于插件，可以在不影响原本功能，并且不改动原本代码基础上，对其功能进行增强。
+                     在Redux中，中间件主要用于增强 dispatch函数。
+                     
+                     redux中间件的基本原理是更改仓库中的 dispatch函数。
+
+                     const oldDispatch = store.dispatch; //保存原版 dispatch
+                     store.dispatch = ()=>{  // 更改 dispatch函数
+                          ...增强的功能
+
+                          oldDispatch(); //调用原版的 dispatch
+                     }
+
+                     一层一层函数包裹起来，每层函数都对其进行增强。
+
+                    redux中间件的书写： 
+                       中间件本身是一个函数，该函数接收一个store参数，该参数表示创建的仓库，但该仓库并非一个完整的仓库对象，仅包含 getState、dispatch。该中间件函数的运行时间，是在创库创建完毕之后运行。
+
+                            由于创建仓库后需要自动运行设置的中间件函数，因此，需要在创建仓库时，告诉仓库有哪些中间件函数。
+                            需要调用 applyMiddleware函数，将函数的返回结果作为createStore函数的第二个或第三个参数，如果
+                              createStore函数拥有三个参数，那么第二个就为状态默认值，如果拥有两个参数，那么第二个可以是默认值也可以是    applyMiddleware函数的返回结果。如果是applyMiddleware函数的返回结果，那么将是启用中间件。
+
+                       中间件函数必须返回一个 dispatch创建函数
+
+                       applyMiddleware函数，用于记录有哪些中间件，它会返回一个函数
+                          该函数用于记录创建仓库的方法，然后又返回一个函数，该函数是用于创建仓库，并传入创建仓库时需要的参数。
+                          如：createStore创建仓库需要一个 reducer参数，那么，返回创建仓库的函数就需要一个 reducer参数。
+
+                         const 函数1 = applyMiddleware(中间件。。。) 该函数1的功能是用于记录创建仓库的方法
+                         const 函数2 = 函数1(createStore) 该函数2的功能是用于创建仓库，参数为，函数1参数函数所需要的参数
+
+                         函数2会返回一个 store仓库
+
+                         所以就有两种方法 创建仓库：
+                             第一种是直接用 createStore函数  来创建仓库，如果想增强 dispatch函数，就传参数 applyMiddleware函数的返回值
+                             第二种是用 applyMiddleware函数 的返回值 链式调用 来创建仓库，如果想增强dispatch函数，applyMiddleware函数就进行传参数中间件函数。
+
+
+                      中间件函数
+                         (store)=>{
+                           该sotre仓库为简易版的仓库
+
+                           所有创建的 dispacth函数固定完之后会 替换掉 store仓库的 dispacth函数
+                           
+                           这个函数为按顺序调用
+
+                           retrun (dispacth)=>{
+                                  该dispacth为下一个中间件创建的 dispacth函数
+
+                                  这个函数为倒着调用
+
+                             reutrn (action)=>{ 这个返回的函数就是创建的 dispacth函数
+
+                             }
+                           }
+                         }
+
+                      中间件函数会被倒着执行，从后往前执行，也就是最后一个中间件创建的diaspacth函数作用域拥有原版的 dispacth函数，因为第一个执行的 dispacth创建函数的参数为 原版的 dispacth函数。
+                      
+                      因此当执行dispacth函数分发时，就是按中间件注册的顺序执行。
+                        
+        
+         */
+        
+    </script>
+    <!-- <script src="https://cdn.bootcss.com/redux/4.0.0/redux.js"></script> -->
+    <script type="module" src="./redux/index1 copy.js"></script>
+</body>
+</html>

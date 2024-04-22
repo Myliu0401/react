@@ -1,0 +1,24 @@
+.form{
+     display: flex;
+     justify-content: center;
+}
+
+.form label{
+    box-sizing: border-box;
+    margin: 0px 10px;
+}
+
+.form button {
+    outline: none;
+    border: 1px solid black;
+    box-sizing: border-box;
+    padding: 0px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    
+}
+
+
+.form button:hover{
+    background-color: #ccc;
+}

@@ -1,0 +1,13 @@
+.totalPaging {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+.totalPaging .span {}
+
+
+.totalPaging .span.active{
+    color: rgb(194, 96, 96);
+}

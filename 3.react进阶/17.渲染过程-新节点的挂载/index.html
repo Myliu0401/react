@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="root"></div>
+    <script>
+        /* 
+                  渲染原理： 
+                      React元素：React Element, 通过React.createElement创建 、语法糖JSX
+                        如： <div>...</div>
+                             <Comp></Comp> 组件也会被 babel 转换成 React.createElement(Comp,...); 转换成React元素
+                      React节点：专门用于渲染到UI界面的对象，ReactDOM会通过React元素，创建React节点，ReactDOM一定是通过react节点来渲染的
+                                 （将react节点渲染到ui界面，如浏览器环境下，reactDOM将react节点对象渲染成DOM对象）
+                        react元素 -----> react节点 -----> 真实DOM
+                        ReactDOM.render(react元素，。。。)；渲染react元素是，内部会将react元素转换成react节点，再根据节点渲染真实DOM。
+                          ReactDOM渲染时一定是通过React节点来进行渲染的。
+                      
+                      节点类型：
+                          React DOM节点： 创建该节点的React元素类型是一个字符串 （该节点是根据react元素类型来创建的）
+                          React 组件节点：创建该节点的React元素类型是一个函数或一个类
+                          React 文本节点：根据字符串、数字创建的
+                          React 空节点：  根据null、undefined、false、true创建的
+                          React 数组节点： 根据数组创建
+                       真实DOM：通过document.createElement创建的dom元素
+
+         
+         
+                  首次渲染/新节点渲染
+                      1. 通过参数的值来创建节点
+                      2. 根据不同节点类型，做不同的操作
+                            1.文本节点：通过document.createTextNode创建真实的文本节点
+                            2.空节点：什么都不做
+                            3.数组节点：遍历数组，将数组每一项递归创建节点（回到第一步反复操作，直到遍历结束）
+                            4.DOM节点：通过document.createElement创建真实的DOM对象，然后立即设置该真实DOM元素的各种属性，然后遍历创建该节点的React元素的props里的children属性
+                              递归操作（回到第1步进行反复操作，直到遍历结束）。如果前面的操作有生成真实DOM那么会将真实DOM添加到上一个真实DOM里面
+                            5.组件节点
+                                1.函数组件：调用函数（该函数必须返回一个可以生成节点的内容），将该函数的返回结果递归生成节点（回到第一步进行返回操作，直到遍历结束）
+                                2.类组件
+                                    1.创建该类的实例，并将实例保存到节点对象中
+                                    2.立即调用实例对象的生命周期方法：static getDerivedStateFromProps
+                                    3.运行该对象的render方法，拿到返回值（回到第一步进行递归操作）
+                                    4.将该组件的componentDidMount加入到执行队列（先进先出，先进先执行），当整个虚拟DOM树全部构建完毕，并且将真实DOM对象加到页面后，执行该队列。
+                      3.生成虚拟DOM树之后，将该树保存起来，以便后续使用
+                      4.将之前生成的真实根DOM对象，加入到容器中
+                    
+                      上面这些节点树就是虚拟DOM树
+        
+        */
+    </script>
+    <script src="https://unpkg.com/react@16/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+    <script type="text/babel">
+             const root = document.getElementById('root');
+
+             ReactDOM.render((<A></A>),root);
+    
+             function A(){
+                 console.log('A')
+                 return (<div>{[<B key='1'></B>,<C key="2"></C>]}<D></D></div>);
+             };
+
+
+             function B(){
+                 console.log('B')
+                 return (<div></div>);
+             };
+
+             function C(){
+                 console.log('C')
+                 return (<div></div>);
+             };
+
+             function D(){
+                 console.log('D')
+                 return (<div></div>);
+             };
+
+    </script>
+</body>
+</html>

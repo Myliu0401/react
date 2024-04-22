@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="root"></div>
+    <script>
+        /* 
+                  属性默认值 和 类型检查
+
+                      属性默认值
+                          给构造函数或类添加一个静态属性 **defaultProps** 告知react属性默认值，该属性为一个对象。
+                          会在构造函数或类调用前，对传进去的属性对象props和静态属性defaultProps对象进行混合，混合后得到一个新对象，调用构造函数或类型时再作为参数传进去。
+                          这一部分实际就是在初始化属性，初始化阶段后调用构造函数或类，也可以在constructor钩子自己进行初始化状态等，所以我们把这个钩子也称为初始化阶段。
+                          
+        
+                      类型检查
+                          使用库 **prop-types** 该库会导出一个 PropTypes对象，对象中有很多属性，用于类型检查
+                          对象组件使用静态属性 **propTypes** 告知react如何检查属性，propTypes为一个对象。
+                        会对属性对象和默认属性对象进行混合初始化后，再对类型进行检查。
+
+                        这些属性都是函数，会掉用这些函数进行类型检查   这些函数中的静态属性 isRequired函数 表示非空
+                         如：a:PropTypes.any.isRequired  表示a属性可以是任何类型但不能为空 undeined、null会被判定为空
+                        
+                          PropTypes.any //任意类型
+                          PropTypes.array //数组类型
+                          PropTypes.bool //布尔类型
+                          PropTypes.func  //函数类型
+                          PropTypes.number  //数字类型
+                          PropTypes.object  //对象类型
+                          PropTypes.string  //字符串类型
+                          PropTypes.symbol  //符号类型
+
+                          PropTypes.node   //任何可以被渲染的内容，如：字符串、数字、React元素 等可以被渲染的
+                          PropTypes.element  //react元素
+                          PropTypes.elementType  //react元素类型 只能传 类或构造函数
+                          PropTypes.instanceOf(构造函数)   //必须是指定构造函数的实例
+                            会返回一个函数，react调用该函数检查时，该函数内部会进行这样 属性  instanceof 构造函数  的判断
+                           
+                          PropTypes.oneOf([xx,xx])   //枚举  就相当于传一个属性，该属性值必须是与该数组中的其中一项严格匹配
+                          PropTypes.oneOfType([类型，类型，。。。])  //属性类型必须是数组中的其中一个
+                          PropTypes.arrayOf(PropTypes.xxx)   //必须是某一类型组成的数组  如: ['a','b'], 该数组只能是字符串组成
+                          PropTypes.objectOf(PropTypes.xxx)  //必须是某一类型组成的对象  如: {a:'xx'}, 该对象的属性值必须是该类型的  
+                          PropTypes.shape(对象)    //属性必须是对象，并且满足指定的对象里面的属性类型要求  如果传的对象有该对象的属性，那么必须一致
+                          PropTypes.exact({...})   //对象必须精确匹配传递的数据  传的对象必须与该对象一样，里面属性必须一致，不能多且不能少
+
+                          自定义属性检查，如果有错误，返回 错误对象 即可，没错误就不用写返回
+                          属性:function (props,propName,componentName){
+                               //props 为混合后的属性对象
+                               //propName  是要验证的属性名
+                               //componentName  是组件名
+
+                          }
+        
+        */
+    </script>
+    <script src="https://unpkg.com/react@16/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+    <script src="https://unpkg.com/prop-types@15.6/prop-types.js"></script>
+    <script src="./components/defaultProps/ClassDefault.jsx" type="text/babel"></script>
+    <script src="./components/defaultProps/FuncDefault.jsx" type="text/babel"></script>
+    <script src="./components/typeCheck/index.jsx" type="text/babel"></script>
+    <script src="./components/typeCheck/test.jsx" type="text/babel"></script>
+    <script type="text/babel">
+         const root = document.getElementById('root');
+
+         ReactDOM.render((<React.Fragment>
+                <FuncDefault></FuncDefault>
+                <ClassDefault></ClassDefault>
+
+                <Test></Test>
+            </React.Fragment>),root);
+    
+    
+    </script>
+</body>
+</html>

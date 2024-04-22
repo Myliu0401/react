@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script>
+      /*  
+                 State Hook 是一个在函数组件中使用的函数(useState函数)，用于在函数组件中使用状态，使函数组件拥有自己的状态。
+                    
+                 useState函数： 
+                     1. 该函数传一个参数，该参数的值表示状态的默认值。
+                     2. 该函数的返回值是一个数组，该数组一定包含两项。 
+                             第一项：当前状态的值
+                             第二项：改变该状态的函数   
+                                     执行该函数并且传递参数，会修改该状态值，并且重新刷新该组件（重新执行该组件函数）
+                 
+                 一个函数组件中可以有多个状态，这种做法非常有利于横向切分关注点。
+
+                 useState的原理: 
+                     
+    
+                     reactDOM创建函数组件节点时，会创建一个状态表，作为该节点对象的某一个属性值。
+                      该函数组件节点拥有一个属性，指向该函数组件元素，该函数组件元素的type值，指向该组件函数。
+                      
+                      函数组件节点:{
+                           该函数组件元素，也就是react元素：{
+                               type: 该组件函数
+                           }，
+
+                           xxx:状态表
+                      }；
+
+                      当执行 组件函数体里的useState函数时，会判断第几次执行。
+                        如 第N次执行，会查找 该函数组件节点中的状态表 是否有 该第N次的值，如果没有，那么会根据useState的参数值作为该值添加进状态表。
+                           如果找得到，就会忽略掉useState函数的参数，将找到的值作为 数组的第一项 返回出来。
+                          每次执行useState函数，会将次数加1
+                      重新调用 组件函数时 会将次数置为0次,所以useState就能按照顺序拿到对应的状态。
+
+                      
+                    
+                 注意： 
+                   1.useState最好写到函数的起始位置，便于阅读。
+                   2.useState严禁出现在代码块中 (如:判断、循环 中)
+                        因为 React 需要在每次组件重新渲染时保持 Hooks 调用的顺序和数量不变。将 useState 放在条件语句中会导致 Hooks 的调用次数在不同渲染之间发生变化，从而可能导致 React 无法正确地管理状态
+                   3.useState返回的函数(数组的第二项)，引用不变 (为了节约内存空间)
+                        组件函数连续调用多次， useState函数 返回的数组第二项，还是一样的，引用不会变
+                   4.使用函数改变数据，若数据和之前的数据完全相等，不会导致重新渲染，以达到优化效率的目的。
+                       react使用 Object.is进行比较。如果数据完全相等那么不会导致重新渲染。
+                   5.使用函数改变数据，传入的值不会和原来的数据进行合并，而是直接替换。
+                          这个与修改类的状态不同。 
+                   6.如果要实现强制刷新组件   (类组件是否要执行render重新渲染，请看新上下文的注意点)
+                        类组件：使用 forceUpdate函数
+                        函数组件：使用useState函数，传一个空对象  
+                                  原理的知识
+                   7.如果某些状态之间没有必然的联系，可分为不同的状态，而不要合并一个对象
+                      原理的知识
+                   8.和类组件的状态一样，函数组件中改变状态可能是异步的（在DOM事件中），多个状态变化会合并，以提高效率，
+                      此时，不能信任之前的状态，而应该使用回调函数的方式改变状态。如果状态变化要使用到之前的状态，尽量传递函数。
+                   
+        
+        */
+    </script>
+    <script src="https://unpkg.com/react@16/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+    <script src="./index.jsx" type="text/babel"></script>
+    <!-- <script src="./index1.jsx" type="text/babel"></script> -->
+    <!-- <script src="./index2.jsx" type="text/babel"></script> -->
+    <!-- <script src="./index3.jsx" type='text/babel'></script> -->
+    <script type="text/babel">
+      const root = document.getElementById("root");
+
+      ReactDOM.render(<App />, root);
+
+      console.log(<div>213<span></span>123</div>, <App />)
+    </script>
+  </body>
+</html>

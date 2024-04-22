@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="root"></div>
+    <script>
+        /* 
+                   HOC 高阶组件
+                       HOF: Higher-Order Funtion 高阶函数，以函数作为参数，并返回一个函数
+                       HOC: Higher-Order Component 高阶组件，以组件作为参数，并返回一个组件
+
+
+                       <Comp />    自定义组件叫做 React组件元素
+                       <h1></h1>   内置组件叫做   ReactHtml元素
+
+                       自定义组件其实也可以叫做高阶组件 <Comp /> 一个组件函数调用返回一个组件
+                          function Comp(){
+                              retrun <h1></h1>
+                          }
+
+                    通常，可以利用HOC实现横切关注点。
+                       如：20个组件，每个组件在创建组件和销毁组件时，需要做离日志记录，20个组件，它们需要显示一些内容，得到的数据结构完全一致，就可以用高阶组件。
+
+
+                    注意： 
+                      1.不要在render中使用高阶组件
+                         因为类对象会重用，如果在render函数中调用高阶组件函数，那么每次重新渲染时，高阶组件都会重新创建。
+
+                      2.不要在高阶组件内部更改传入的组件
+                         因为永远不知道使用高阶组件的人传入的组件参数自己会做那些更改
+
+        
+        
+         */
+    </script>
+    <script src="https://unpkg.com/react@16/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+    <script src="./components/withComp/index.jsx" type="text/babel"></script>
+    <script type="text/babel">
+             
+             const root = document.getElementById('root');
+            
+             class A extends React.Component{
+                 constructor(props){
+                     super(props);
+                 };
+
+
+                 render() {
+                      return (<h1>数据:{this.props.b}</h1>); 
+                 };
+             };
+
+
+             class B extends React.Component{
+                 constructor(props){
+                     super(props);
+                 };
+
+
+                 render() {
+                      return (<h1>数据:{this.props.a}</h1>);
+                 };
+             };
+ 
+             const AOrder = MyWith(A); //得到一个高阶组件
+             const BOrder = MyWith(B); //得到一个高阶组件
+
+             ReactDOM.render((<React.Fragment>
+                       <AOrder b={123} isLogOn={true}></AOrder>
+                       <BOrder a={456} isLogOn={true}> </BOrder>
+                </React.Fragment>),root);
+    
+    </script>
+</body>
+</html>

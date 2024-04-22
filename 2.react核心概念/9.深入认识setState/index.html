@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="root"></div>
+    <script>
+        /* 
+                深入 setState
+                     setState,改变状态，**可能**是异步的
+                       如果改变状态的setState代码是在某个HTML元素的事件处理函数中，则setState改变状态是异步的，否则是同步的
+
+                    setState函数可以有两个参数： 第一个参数 对象/函数   第二个参数 函数
+                        如果setState函数第一个参数是函数,那么react在执行这个函数时会将状态作为参数传给该函数，该参数是永远可以信任的(与state不是同一个，会与setState同步更新状态)                     
+ 
+                        如果setState在HTML元素的事件处理函数中或跟HTML元素的事件相关
+                              那么react会把每次执行的setState,参数添加进行队列，等待所有的setState执行完毕后，再执行队列中的添加来的setState第一个参数，等待
+                               队列中全部执行完毕后，就执行render函数，render函数执行完毕后，就执行添加进队列的setState第二个参数。
+                                如果setState函数第一个参数是对象，也同样会被添加进对列。 只是多了一步判断 if( typeas 对列[i] === 'object' ){ react内置的函数(对列[i]) }
+                               **全部都是异步代码**                               
+ 
+                        如果setState不是在HTML元素的事件处理函数中或没有与HTML元素的事件相关
+                              那么setState每执行一次，会修改状态一次，修改状态后会执行render函数，再执行setState第二个参数函数
+                                **全部都是同步代码**
+
+                     
+                     React会对异步的setState进行优化，将多次setState进行合并(将多次状态改变完成后，再统一对state进行改变，然后触发render)
+               
+
+                最佳实践
+                   1.把所有的setState当作是异步的
+                   2.永远不要信任setState调用之后的状态数据
+                   3.如果要使用改变之后的状态，需要使用回调函数 (setState的第二个参数)
+                   4.如果新的状态要根据之前的状态进行运算等，使用函数的方式改变状态 (setState的第一个函数)
+
+        
+        */
+    </script>
+    <script src="https://unpkg.com/react@16/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+    <script src="./components/MyComp/MyComp.jsx" type="text/babel"></script>
+    <script type="text/babel">
+         
+         const root = document.getElementById('root');
+
+         ReactDOM.render((<MyComp></MyComp>),root);
+
+    </script>
+</body>
+</html>

@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="root"></div>
+    <script>
+        /* 
+                  Callback Hook
+                       该Hook 是用来固定一个引用值函数，通常用在性能优化。
+
+                    useCallback函数，该函数接收两个参数     该Hook跟useEffect的功能差不多
+                          1. 回调函数     
+                          2. 数组，记录依赖项
+                      
+                      每次重新渲染时，该Hook会判断 依赖是否发生变化，如果发生变化就会将第一个参数回调函数，覆盖掉 状态表中 对应的函数，并且返回，如果依赖项
+                        没有发生变化，则会忽略该参数回调，并且不会覆盖掉状态表对应的，并且返回原来的函数/状态表中对应的函数。
+                    
+                    所以该Hook是用来固定 回调函数 的引用
+
+
+
+                    =========================================
+                       react插件，会将选中有 useState Hook 的组件函数 再执行一次，但是其后代的组件不会受影响，后代的函数或类组件也不会再执行多一次
+                       打包之后就不会受react插件的影响了，回归正常
+        
+        
+        
+        */
+    </script>
+    <script src="https://unpkg.com/react@16/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+    <script type="text/babel">
+           const useState = React.useState;
+           const useCallback = React.useCallback;
+           class Test extends React.PureComponent {
+               constructor(props){
+                        super(props);
+
+                        
+               };
+
+
+               render(){
+                console.log('Test render')
+                   return (<div>
+                         <h1>{this.props.text}</h1>
+                         <button onClick={this.props.onClick}>改变文本</button>
+                    </div>)
+               };
+           };
+
+           const root = document.getElementById('root');
+           ReactDOM.render((<App/>),root);
+
+           function Parent(){
+
+                console.log('render Parent')
+
+                const [text,setText] = useState(123);
+                const [n,setN] = useState(0);
+  
+                const callback = useCallback(()=>{
+                    setText(Math.random());
+                },[text]);
+
+
+
+                return (<div>
+                          {/* 函数的地址每次渲染都发生了变化，导致了子组件跟着重新渲染，若子组件是经过优化的组件，则可能导致优化失效，现在使用了 回调Hook 就不会了 */}
+                          <Test text={text} onClick={callback} />
+
+                          <input type="number" value={n} onChange={(e)=>{
+                              setN(e.target.value);
+                          }} />
+                    </div>)
+           };
+
+
+           function App(){
+            const [text,setText] = useState(123);    
+               console.log('render App');
+
+               return (<Parent/>);
+           };
+
+
+    </script>
+</body>
+</html>

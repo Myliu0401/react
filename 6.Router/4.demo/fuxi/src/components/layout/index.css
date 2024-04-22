@@ -1,0 +1,23 @@
+.layout{
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.layout .layout_header{
+
+}
+
+
+.layout .layout_main{
+   flex-grow: 1;
+   display: flex;
+}
+
+.layout .layout_main .main_sideber{
+  height: 100%;
+}
+
+.layout .layout_main .main_main{
+  flex-grow: 1;
+}

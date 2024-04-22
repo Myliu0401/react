@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="root"></div>
+    <div class="mantle"></div>
+    <script>
+        /* 
+               Portals 
+                  插槽，react的插槽跟vue的插槽不一样
+                  react的插槽是将一个 React元素渲染到指定的真实DOM中。
+
+                  ReactDOM.createPortal(react元素，真实的DOM)， 该函数返回一个react元素
+
+                  当渲染到返回的react元素时，就会将指定的react元素渲染到指定的真实dom中。
+                  虚拟dom树还是样，不会受到插槽的影响，但是真实dom树就会被影响到。（真实dom树与虚拟dom树不一致）
+ 
+
+               注意事件冒泡
+                   1. React中的事件是被包装过的
+                   2. react中的事件冒泡是根据虚拟DOM数来冒泡的，与真实DOM树无关。
+
+        
+        
+        */
+    </script>
+    <script src="https://unpkg.com/react@16/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+    <script type="text/babel">
+          const root = document.getElementById('root');
+          const mantle = document.querySelector('.mantle');
+       
+          
+          ReactDOM.render((<Test></Test>),root);
+ 
+
+
+         function A(){
+            return ReactDOM.createPortal((<div>
+                <h1>children-A</h1>
+                   <B></B>
+                </div>),mantle);
+         };
+
+         function B(){
+             return (<div>
+                <h1>children-B</h1>
+                
+                   <C></C>
+                </div>);
+         };
+
+         function C(){
+             return (<div><h1>children-C</h1></div>);
+         };
+
+         function Test(){
+             return (<div className='app' onClick={(event)=>{
+                 console.log('root',event.target)
+             }}>
+                  <A></A>
+                </div>);
+         };
+
+    </script>
+</body>
+</html>

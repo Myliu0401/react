@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="root"></div>
+    <script>
+        /* 
+                      Context Hook  
+                         上下文Hook 是用来减少组件使用上下文的嵌套结构的。
+
+                        例子： 
+                            生产者 :   <ctx.Provider value='xxx'>
+                                     <组件/>
+                                </ctx.Provider>
+
+                            消费者 :   <ctx.Consumer>
+                                   {(value)=>{}}
+                                </ctx.Consumer>
+
+                            从而是组件多了一个消费者结构，上下文Hook 就是为了减少该消费者结构
+                    
+                      useContext函数 
+                          该函数接收一个参数，该参数为 上下文对象 ctx
+                          该函数的返回值就是 生产值 传的属性
+        
+        
+        
+        
+        
+        */
+    </script>
+    <script src="https://unpkg.com/react@16/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+    <!-- <script src="./index.jsx" type="text/babel"></script> -->
+    <script src="./index1.jsx" type="text/babel"></script>
+    <script type="text/babel">
+              const root = document.getElementById('root');
+              const useContext = React.useContext;
+              ReactDOM.render((<App/>),root);
+    </script>
+</body>
+</html>

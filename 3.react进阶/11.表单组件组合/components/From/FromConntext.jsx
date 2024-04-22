@@ -1,0 +1,1 @@
+const fromCtx = React.createContext(); //创建一个上下文对象

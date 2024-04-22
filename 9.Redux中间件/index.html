@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    /* 
+              中间件
+                 redux-logger  打印日志记录，主要用于调试 该中间件最好放在最后一个,因为前面的中间件处理的action有可能不是平面对象，导致往后提交到
+                               redux-logger中间件时，redux-logger中间件处理会出现问题。
+
+                 处理副作用的中间件
+                    redux-thunk
+                    redux-promise
+                    redux-saga
+
+
+                  redux-thunk: 
+                      thunk允许action是一个带有副作用的函数，当action是一个函数被分发时，thunk会阻止action继续向后移交。
+
+                      thunk会向action函数中传递三个参数：
+                         dispatch: 来自于store.dispatch，该 dispatch函数不是下一个 dispatch函数而是 store.dispatch
+                         getState: 来自于store.getState
+                         extra:    来自于用户设置的额外参数
+                         
+                      该中间件允许action创建函数返回的是一个 函数，而不是一个平面对象，该中间件在处理数据时会判断action是否是一个函数，如果是一个函数，则执行该函数，而不往后面继续提交，如果是一个平面对象则继续往后面提交。
+
+
+                  redux-promise: 
+                      如果action是一个promise，则会等待promise完成，将完成的结果作为action参数触发dispatch。
+                      如果action不是一个promise，则会判断其payload属性是否是一个promise，如果是，则等待promise完成，然后将其结果作为payload的值进行触发dispatch。
+                      如果都不是，则往后继续提交。
+                      该中间件规定了 action的type属性必须是一个字符串。
+                      还规定了 action的属性不能包含其他非标准属性  标准属性["type", "payload", "error", "meta"]
+                     
+                   
+                    redux-promise和redux-thunk中间件：都有弊端，都需要改动action，会导致action或action创建函数不在纯净。
+                    redux-sage中间件将解决这个问题，它不仅保持action、action创建函数、reducer的纯净，而且可以用模块化的方式解决副作用，并且功能非常强大。
+                    redux-sage是建立在ES6生成器基础上的，要熟练的使用sage,必须理解生成器，要理解生成器就必须先理解迭代器和可迭代协议
+
+                    
+                  redux-saga 
+                    特点： 纯净、强大、灵活
+                    saga不会污染 action
+                    saga不会阻塞action往后面继续提交。
+
+                    saga在最开始的时候要手动启动一个saga任务，saga任务：生成器函数。
+                     saga为任务提供大量功能以供使用，这些功能是以指令的形式出现的，而且出现在 yield关键字后面，因此可以被saga中间件控制它执行。
+                    
+                    在saga任务中，如果 yield关键字后 是一个普通数据，saga中间件不会作任务处理，仅仅将数据传递给 yield表达式（把得到的数据放到next的参数中），因此，在saga中，yield一个普通数据没有意义。
+
+                    saga需要我们自己在 yield后面放上一些合适的 saga指令 (saga effects), 如果放的是指令，saga中间件会根据不同的指令进行特殊处理，以控制整个任务的流程。
+
+                    每个指令本质上就是一个函数，该函数调用后，会返回一个指令对象，saga会接收到该指令对象，进行对应的处理。
+
+                    **一旦saga任务完成（生成器函数运行完成），则saga中间件一定会结束**
+
+                    **指令前面必须使用 yield，以确保该指令的返回结果被 saga控制**
+                    
+                    指令： 
+                      take指令：（该指令会阻塞）。 监听某个action,如果action发生了(也就是 dispacth为参数该目标的action),则会进行下一步处理，take指令仅监听一次。yield得到的是完整的action对象。
+                        参数为 action的类型，表示监听该action
+
+                      all指令：（该指令会阻塞）。 该函数传入一个数组参数，数组中每项为生成器，saga会等待所有（每一项生成器）生成器全部完成后才会进一步处理。
+
+                      takeEvery指令：（该指令不会阻塞）。 不断的监听某个action, 当某个action到达之后，运行一个函数。takeEvery永远不会结束当前的生成器
+                         传递两个参数：第一位为action类型（type）、第二个为生成器函数
+                           当目标的action对应到时，就会运行第二个参数生成器函数
+
+                      delay指令：（该指令会阻塞）阻塞的时长为指定的毫秒数（参数）
+
+                      put指令： （不会阻塞）用于重新触发action,相当于dispatch一个action (参数为action)
+
+                      call指令：（）用于异步
+                      尚未完成。。。
+    
+    */
+  </script>
+</body>
+</html>

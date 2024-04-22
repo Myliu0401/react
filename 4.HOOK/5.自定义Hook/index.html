@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="root"></div>
+    <script>
+        /* 
+                     自定义 Hook 
+                        
+                        自定义Hook: 就是将一些常用的、跨组件的Hook功能（相同的功能），抽离出来形成一个函数，该函数就是自定义Hook,自定义Hook,由于其内部需要
+                                    使用Hook功能，所以它本身也需要按照Hook的规则实现：
+                                      1.函数名必须以use开头
+                                      2.调用自定义Hook函数时，应该放到顶层
+                     
+                        例如：
+                         很多组件都需要在第一次加载完成后，获取所有学生数据
+                         很多组件都需要在第一次加载完成后，启动一个计时器，然后在组件销毁时卸载
+                               
+        
+        
+        */
+    </script>
+    <script src="https://unpkg.com/react@16/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+    <script src="https://cdn.bootcdn.net/ajax/libs/Mock.js/1.0.1-beta3/mock-min.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="./mock.js"></script>
+    <script src="./api.js"></script>
+    <script src="./myHooks/useAllStudents.js"></script>
+    <script src="./myHooks/usePageStudents.js"></script>
+    <script src="./myHooks/useTimer.js"></script>
+    <!-- <script src="./index.jsx" type="text/babel"></script> -->
+    <!-- <script src="./index1.jsx" type="text/babel"></script> -->
+    <!-- <script src="./index2.jsx" type="text/babel"></script> -->
+    <!-- <script src="./index3.jsx" type="text/babel"></script> -->
+    <script src="./index4.jsx" type="text/babel"></script>
+    <script type="text/babel">
+           const useState = React.useState;
+           const useEffect = React.useEffect;
+           const root = document.getElementById('root');
+
+           ReactDOM.render((<Test />),root);
+    
+    </script>
+    
+</body>
+</html>

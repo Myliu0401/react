@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="root"></div>
+    <script src="https://unpkg.com/react@16/umd/react.production.min.js"></script>
+    <script src="https://unpkg.com/react-dom@16/umd/react-dom.production.min.js"></script>
+    <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+    <script>
+        /* 
+                    什么是JSX
+                       由Facebook起草的JS扩展语法
+                       本质是一个JS对象,会被babel编译，最终会被转换为 React.createElement
+                       每个JSX表达式，有且仅有一个根节点
+                           如： <h1><span></span></h1>  只能有一个根节点，因为最终会被转换成 React.createElement
+                           如果不想让根节点渲染在页面中，那么可以用 <React.Fragment></React.Fragment> 当做根节点。可以简写为 <></>
+                       每个JSX元素必须有结束 (XML规范)
+                           如: <span></span> 必须要有结束标签 或 <img  />
+
+                    
+                    在JSX中嵌入表达式
+                       JSX表达式中可以使用JS表达式 使用大括号 { js表达式 } 将表达式作为内容的一部分
+                           如：<h1 title={ a }>{ 1+1 }</h1>
+                           但是 unll、undefined、false不会被渲染在页面，也就是不会显示
+                           普通对象,不可以作为子元素，但是可以是react元素对象或数组，如果是数组那么会被遍历成子节点，同样数组里面不能包含普通对象。
+                           如：<h1><span></span></h1>  可以。
+                              <h1>普通对象</h1>  不可以。  
+                            特性也可以使用JS表达式，同样是使用大括号。
+                              特殊的特性： class 
+                                             必须使用 className作为属性名， 因为class为关键字，且dom中className为dom的class。
+
+                                           style
+                                              属性值必须是一个对象，因为对应dom中的style属性，dom中的style为一个对象。
+                                              如：<h1 style={{a,x,c,}}></h1>
+                           遍历生成dom同样必须添加 key值
+
+                       在JSX中使用注释必须用大括号括起来，表示这是js注释
+                           如： <h1>
+                                     { js注释 }
+
+                                </h1>
+                        
+                       属性使用小驼峰命名法
+                            如: style={{ marginLeft:xxx }}
+                                className
+
+                       防止注入攻击
+                          如果内容是一个 html结构的字符串，会被编码，相当于 innerText = html结构字符串，目的是为了防止注入攻击
+
+                          可以使用 dangerouslySetInnerHTML命令让其不被编码，变成这样 innerHTML = html结构字符串
+                              dangerouslySetInnerHTML写在行间上，值必须是一个对象。
+                             如: <h1 dangerouslySetInnerHTML={{
+                                 __html:html结构字符串
+                             }}></h1>
+
+
+                        
+                   元素的不可变性
+                       虽然JSX元素时一个对象，但是该对象中的所有属性不可更改，react使用es6对对象进行冻结。
+                       如果需要更改元素的属性，只能重新创建JSX元素
+                           ReactDOM.render函数会对第一个参数的虚拟dom做对比，进行针对性的修改页面的真实dom
+                            
+        */
+    </script>
+    <script type="text/babel">
+       const root = document.getElementById('root');
+
+       let a =123;
+       const b = 456;
+       const title = '这是一个span';
+
+       //嵌入js表达式
+       const p = (<p title={ title }>{ a } + { b } = { a + b }{null}{undefined}{false}</p>);
+       
+       const url = 'https://img2.baidu.com/it/u=1357720467,2636512316&fm=26&fmt=auto';
+
+       let arr = new Array(20);
+       arr.fill(1);
+       
+       //必须添加key值
+       arr = arr.map((el,index)=>{
+           return <li key={index}>{index+1}</li>
+       });
+    
+       const span = `<span></span>`
+
+       //将表达式作为属性
+       const img = (<img src={url} />);
+
+
+       function my(){
+
+           const children = (<React.Fragment>{/* 这是js */}<h1>hello world - {a}</h1><span>span</span>{p}<img src={url}/><ul>{arr}</ul><div dangerouslySetInnerHTML={{
+           __html:`<span>这是一个span标签</span>`
+           }}></div></React.Fragment>);
+
+           ReactDOM.render(children,root);
+       };
+
+
+
+       setInterval(()=>{
+          my();
+          a++;
+       },1000);
+
+      
+    </script>
+</body>
+</html>

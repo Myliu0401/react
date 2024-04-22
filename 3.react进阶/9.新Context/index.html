@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="root"></div>
+    <script>
+        /* 
+               新版Context Api 
+                   旧版API存在严重的效率问题，并且容易导致滥用。
+
+                   创建上下文
+                       上下文是一个独立于组件的对象，该对象通过 React.createContext(上下文的默认值) 创建。
+                       该函数会返回一个对象，该对象包含有两个特殊的属性：
+                        1. Provider属性：生产者。该属性为一个组件，该组件会创建一个上下文，该组件有一个value属性，通过该属性，可以
+                              为上下文数据赋值。
+                            如：   const ctx = React.createContext(); //创建一个上下文对象
+                              <ctx.Provider value={上下文数据}>
+                                  <组件></组件>  children属性会被作为子组件
+                              </ctx.Provider>
+                              在该上下文组件下的所有组件就可以使用该上下文中的数据
+                            
+                              **同一个Provider组件，不要用到多个组件中，因为会导致数据混乱，如果需要在其他组件中使用该数据，应将Provider组件提升到更高的层次**
+                                如：有多个组件想创建上下文，不要用同一个Provider组件来创建上下文，应该重新创建新的 Provider组件来创建上下文
+        
+        
+                        2. Consumer属性：消费者。 该属性为一个组件，使用该组件时，并且传递一个属性 children，值为函数，react会执行该函数，并且传该ctx的上下文进去
+                                                 会将该函数的返回值渲染出来。
+
+
+
+                   使用上下文中的数据
+                        1. 在类组件中，直接使用 this.context 获取上下文数据  
+                             提前，必须拥有静态属性 contextType, 值为 创建的上下文对象 如:ctx
+
+                        2.在函数组件中，需要使用 Consumer组件来获取上下文数据
+                          如： <ctx.Consumer>
+                                   {函数}  函数的返回值，会被渲染出来。react执行该函数时会传该上下文对象进去 
+                              </ctx.Consumer>
+                              ctx.Consumer 组件的子节点，是一个函数，也可以用 children属性进行传递
+
+
+                   注意的细节：  （强制刷新）
+                       如果，上下文提供者（Context.Provider）中的value属性发生变化，会导致该上下文下的所有组件全部被重新渲染，
+                          无论组件是否有优化（shouldComponentUpdate函数返回什么结果），都会进行重新渲染。类组件的情况下。
+                          
+                       如果，上下文的value属性没有发生变化，那么就会走一个正常的生命后周期。（就不会跳过shouldComponentUpdate函数）
+
+
+
+                  如果同个 Context.Provider 渲染多次，并且修改了上下文，然后再使用同个上下文的消费者，那么消费者会找最近的生产者的value来作为上下文对象
+                  相当于同个 Context.Provider 使用多次，那么其该生产者中，的消费者的上下文对象就是最近的生产者生产的上下文对象
+         
+    
+                  
+
+                伪源码：
+                  function createContext(defaultValue){
+                      const context = {
+                           defaultValue: value,
+                           Provider: class extends Component{
+                                  constructor(props){
+                                     context.defaultValue = props.value || context.defaultValue   
+                                  }
+                           },
+                           Consumer: class extends Component{
+                                 constructor(){
+
+                                 };
+
+                                 render(){
+                                    const value = findParentProviderInTree(this.context, this.父组件上下文);
+                                 
+                                    return props.children(value)
+                                
+                                 }
+                           }
+                      };
+
+
+                      return context
+                  };
+
+                  function findParentProviderInTree(currentContext, targetContextType) {
+                     // 从当前上下文向上遍历父级，查找匹配的提供者
+                     while (currentContext) {
+                       if (currentContext === targetContextType) {
+                         return currentContext; // 返回匹配的提供者
+                       }
+                       currentContext = currentContext.parentContext; // 移动到父级上下文
+                     }
+                     return undefined; // 没有找到匹配的提供者
+                   }
+         
+         
+         
+     */
+    </script>
+    <script src="https://unpkg.com/react@16/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+    <!-- <script src="./index.jsx" type="text/babel"></script> -->
+    <script src="./index.jsx" type='text/babel'></script>
+    <script type="text/babel">
+            const root = document.getElementById('root');
+
+            ReactDOM.render((<NewContext></NewContext>),root);
+    
+    </script>
+</body>
+</html>

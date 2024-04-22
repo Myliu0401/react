@@ -1,0 +1,56 @@
+.paging_Comp {
+    display: flex;
+    width: 100%;
+}
+
+.paging_Comp .paging {
+    display: flex;
+}
+
+.paging_Comp .paging .headAndTail {}
+
+
+.paging_Comp .paging .headAndTail .span {
+    box-sizing: border-box;
+    padding: 4px 7px;
+    border: 1px solid #ccc;
+    margin: 0px 5px;
+    cursor: pointer;
+    display: inline-block;
+    height: 100%;
+}
+
+.paging_Comp .paging .headAndTail .span.disable {
+    cursor: no-drop;
+    border: none;
+    background-color: rgb(228, 228, 228);
+    color: #fff;
+}
+
+
+.paging_Comp .paging .container {
+    display: flex;
+    list-style: none;
+}
+
+.paging_Comp .paging .container .li {
+    box-sizing: border-box;
+    padding: 4px 7px;
+    border: 1px solid #ccc;
+    margin: 0px 5px;
+    cursor: pointer;
+}
+
+
+.paging_Comp .paging .container .li.active {
+    border: none;
+    font-weight: bold;
+    color: red;
+}
+
+
+.paging_Comp .paging .headAndTail .span:not(.disable):hover,
+.paging_Comp .paging .container .li:not(.active):hover {
+    background-color: #ccc;
+    color: rgb(100, 162, 190);
+}

@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="root"></div>
+    <script>
+        /* 
+                reference:引用
+                  ref: 跟vue一样，用户获取真实dom元素，直接添加在内置组件上或类组件上。
+                       添加后，在实例中，就会添加refs属性对象，该对象中就会有添加ref的真实dom或实例对象。
+                       this.refs.xxx  
+                  
+                 应该场景：希望直接使用dom元素中的某个方法，或者希望直接使用自定义组件中的某个方法
+                    
+                 ref作用于内置的html组件，得到的将是真实的dom对象。
+                 ref作用于类组件，得到的将是类的实例
+                 ref不能作用于函数组件
+
+                 react对象对ref的赋值是在render函数后的阶段进行赋值的
+
+                 ref不再推崇使用字符串赋值，字符串赋值的方式将来可能会被移除，因为ref使用字符串赋值有严重的效率问题和不灵活。
+                 目前,ref推崇使用对象或者是函数。
+                 不使用字符串赋值后，实例对象中的refs属性对象，将不再赋值，也就是将只是空对象而已。
+                   1.赋值对象的形式 
+                      React.createRef();  该函数将返回一个对象，对象里面有一个current属性。
+                      { current:null }    或者直接写一个对象进行赋值。
+                      到时react会将dom或实例赋值在该对象中的current属性。
+
+                   2.赋值函数的形式
+                      react会调用该函数，并且传一个参数进去，该参数就是真实dom或实例对象。就可以在函数中对其进行保存等等操作。
+                     该函数的调用时间
+                       1.componentDidMount执行时已经渲染完毕，所以在该阶段之后或该阶段中，可以拿到该ref。   
+                      
+                       2.如果ref的值发生变动(重新赋值新的属性)，那么分别会调用旧的函数以及新的函数，时间点出现在componentDidUpdate之前。
+                          1. 旧函数执行会传递null进去
+                          2. 新函数执行会传递dom或实例
+                        
+                       3.如果ref所在的组件被销毁，也会调用该函数，无论是自定义组件还是类组件
+
+
+                  谨慎使用ref
+                     能够使用属性和状态进行控制，就不要使用ref.
+                        
+
+
+                    
+        */
+    </script>
+    <script src="https://unpkg.com/react@16/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+    <script src="./components/myref/index.jsx" type="text/babel"></script>
+    <script src="./components/myref/FuncObj.jsx" type="text/babel"></script>
+    <script type="text/babel">
+           const root = document.getElementById('root');
+
+           const comp = <FuncObj></FuncObj>;
+           
+           ReactDOM.render(comp,root);
+    </script>
+</body>
+</html>

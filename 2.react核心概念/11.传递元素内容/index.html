@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="root"></div>
+    <script>
+        /* 
+                内置组件: 
+                    <h1>内容</h1>
+
+                自定义组件
+                   <Xxx  xx={内容}>内容</Xxx>
+                   写在插槽中的会被添加进属性的children。 props.children
+
+
+        
+        
+        */
+    </script>
+    <script src="https://unpkg.com/react@16/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+    <script src="./Index.jsx" type="text/babel"></script>
+    <script type="text/babel">
+         const root = document.getElementById('root');
+
+
+         ReactDOM.render((<MyIndex conter='hello world'>{'啥玛丽卡'}</MyIndex>),root);
+
+    </script>
+</body>
+</html>

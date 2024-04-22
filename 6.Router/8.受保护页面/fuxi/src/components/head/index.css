@@ -1,0 +1,29 @@
+
+
+.head {
+   width: 100%;
+   padding: 0px 20px;
+   height: 70px;
+   display: flex;
+   align-items: center;
+   justify-content: space-between;
+   background-color: #abcdef;
+}
+
+.head .head_nav{
+
+}
+
+
+.head .head_nav .nav_ul{
+   
+}
+
+.head .head_nav .nav_ul .ul_item{
+  padding:0px 10px ;
+}
+
+.head .head_logn{
+   
+}
+

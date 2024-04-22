@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  `<div class="mume markdown-preview  ">
+    <h3 class="mume-header" id="A1">react渲染的原理</h3>
+
+    <p>渲染：生成用于显示的对象，并将这些对象形成真实的DOM对象</p>
+    <ul>
+      <li>React元素：React Element, 通过 React.createElement创建、JSX语法。<br>
+        如：
+        <ul>
+          <li><code>&lt;div&gt;...&lt;/div&gt;</code></li>
+          <li><code>&lt;Comp&gt;&lt;Comp&gt;</code> 组件也会被 <code>babel</code> 转换成
+            <code>React.createElement(Comp,...)</code>; 转换成React元素
+          </li>
+        </ul>
+      </li>
+      <li>
+        React节点：专门用于渲染到<code>UI</code>界面的对象，<code>ReactDOM</code>会通过<code>React元素</code>创建<code>React节点</code>，<code>ReactDOM</code>一定是通过<code>React节点</code>来渲染的。
+        <ul>
+          <li><code>将React节点渲染到ui界面，如浏览器环境下，ReactDOM将React节点渲染成真实DOM对象</code></li>
+        </ul>
+      </li>
+    </ul>
+    <p>···<br>
+      React.render(react元素,...) 内部会通过react元素创建react节点，在根据react节点创建真实DOM对象。<br>
+      ReactDOM渲染时一定是通过react节点来渲染的。<br>
+      ···</p>
+    <p><img src="https://www.yulian.pro:443/imageFile/2019-07-25-13-51-08.png" alt="img"></p>
+    <p>节点类型：</p>
+    <ol>
+      <li>React DOM节点：创建该节点的react元素类型是一个字符串 （该节点根据react元素类型来创建的）</li>
+      <li>React 组件节点：创建该节点的react元素类型是一个函数或类</li>
+      <li>React 文本节点：根据字符串、数字创建</li>
+      <li>React 空节点： 由null undefined false true</li>
+      <li>React 数组： 根据数组来创建</li>
+    </ol>
+    <p>真实DOM：通过 document.createElement 创建dom元素</p>
+    <h3 class="mume-header" id="A2">
+      首次渲染/新节点渲染</h3>
+
+    <ol>
+      <li>通过参数的值来创建节点<br>
+        <code>ReactDOM.render(react元素,...) 通过react元素来创建节点</code>
+      </li>
+      <li>根据不同的节点类型，做不同的操作：
+        <ol>
+          <li>文本节点：通过 <code>document.createTextNode</code> 创建真实文本节点。</li>
+          <li>空节点： 什么都不做。</li>
+          <li>数组节点： 遍历数组，将数组的每一项递归创建节点 （回到第一步反复操作，直到遍历结束）</li>
+          <li>DOM节点： 通过 <code>document.createElement</code>
+            创建真实DOM对象,然后立即设置该真实dom的各种属性，然后遍历创建该节点React元素的props里的children属性（回到第一步反复操作，直到遍历结束）如果前面的操作有生成真实DOM那么会将真实DOM插入到上一个真实DOM里面。
+          </li>
+          <li>组件节点：
+            <ol>
+              <li>函数组件： 调用函数（该函数必须返回一个可生成节点的内容），将该函数的返回结果递归生成节点（回到第一步反复操作，直到遍历结束）</li>
+              <li>类组件：
+                <ol>
+                  <li>创建该类实例，并将实例保存到节点对象中</li>
+                  <li>立即调用对象的生命周期方法 <code>static getDerivedStateFromProps</code></li>
+                  <li>运行该对象的<code>render</code>函数，拿到返回值（回到第一步进行递归操作）</li>
+                  <li>将该组件的 <code>componentDidMount</code> 加入到执行队列（先进先出，先进先执行），当整颗虚拟dom树构建完成后并将真实dom添加到容器后，执行该队列。</li>
+                </ol>
+              </li>
+            </ol>
+          </li>
+        </ol>
+      </li>
+      <li>生成完虚拟dom树后，将该树保存起来，以便后续使用。</li>
+      <li>将之前生成的真实根dom对象，加入到容器中。</li>
+    </ol>
+    <pre data-role="codeBlock" data-info="js" class="language-javascript">  <span class="hljs-keyword">const</span> app = <span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">className</span>=<span class="hljs-string">&quot;div&quot;</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-name">h1</span>&gt;</span>
+          标题
+          { [&quot;abc&quot;,null,<span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span>段落<span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span>] }
+      <span class="hljs-tag">&lt;/<span class="hljs-name">h1</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span>undefined<span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span>
+   <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span>
+</pre>
+    <p>以上的代码生成的虚拟dom树：<br>
+      <img src="https://www.yulian.pro:443/imageFile/dfe9a5c8fc7ee65a46be7c96d03a3ee.png" alt="img">
+    </p>
+    <pre data-role="codeBlock" data-info="js" class="language-javascript"> <span class="hljs-keyword">function</span> <span class="hljs-title function_">Comp</span>(<span class="hljs-params">props</span>){
+      <span class="hljs-keyword">return</span> (<span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">h1</span>&gt;</span>comp { props.n }<span class="hljs-tag">&lt;/<span class="hljs-name">h1</span>&gt;</span></span>);
+ };
+ <span class="hljs-keyword">function</span> <span class="hljs-title function_">App</span>(<span class="hljs-params">props</span>){
+     <span class="hljs-keyword">return</span> (<span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">Comp</span> <span class="hljs-attr">n</span>=<span class="hljs-string">{5}</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">Comp</span>&gt;</span>
+     <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span>); 
+ }
+ <span class="hljs-keyword">const</span> app = <span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">App</span> /&gt;</span></span>
+ <span class="hljs-title class_">React</span>DOM.<span class="hljs-title function_">render</span>(app,<span class="hljs-variable language_">document</span>.<span class="hljs-title function_">getElementById</span>(<span class="hljs-string">&#x27;root&#x27;</span>));
+</pre>
+    <p>以上的代码生成的虚拟dom树：<br>
+      <img src="https://www.yulian.pro:443/imageFile/72702c32ff903484d78ff026a8fdd0a.png" alt="img">
+    </p>
+    <pre data-role="codeBlock" data-info="js" class="language-javascript"> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Comp1</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">React</span>.<span class="hljs-title">Component</span> </span>{
+      render(){
+        <span class="hljs-keyword">return</span> (&lt;h1&gt;<span class="hljs-type">Comp1</span>&lt;/h1&gt;)
+      }
+  };
+
+  <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">App</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">React</span>.<span class="hljs-title">Component</span> </span>{
+    render(){
+      <span class="hljs-keyword">return</span> (&lt;div&gt;
+        &lt;<span class="hljs-type">Comp1</span>&gt;&lt;/<span class="hljs-type">Comp1</span>&gt;
+      &lt;/div&gt;);
+    }
+  };
+
+  const app = &lt;<span class="hljs-type">App</span>/&gt;
+  <span class="hljs-type">ReactDOM</span>.render(app,document.getElementById(<span class="hljs-symbol">&#x27;roo</span>t&#x27;));
+</pre>
+    <p>以上代码生成的虚拟dom树：<br>
+      <img src="https://www.yulian.pro:443/imageFile/5d30e6240903c56ddb177fbc2cd5d4b.png" alt="img">
+    </p>
+
+  </div>`
+</body>
+
+</html>

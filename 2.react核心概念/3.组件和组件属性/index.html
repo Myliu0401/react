@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="root"></div>
+    <script src="https://unpkg.com/react@16/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+    <script>
+        /*
+                创建一个组件
+                   1.函数组件      **组件的名称首字母必须是大写**
+                       函数返回一个 react元素
+                       如：  function MyFuncComp(){
+                                   return <h1></h1>
+                             }
+                        <MyFuncComp></MyFuncComp> 
+                          React在创建时会根据这个首字母来判断是否是组件还是单标签，如果被判定组件那么会调用对应的函数得到其返回值，再进行后续操作。
+                          
+                        控制台react调试插件，显示组件的名称是对应的函数名称
+                    
+                    
+                   2.类组件  
+                       必须继承 React.Component
+                       必须提供render函数,函数返回一个 react元素。
+                       同样也是根据首字母大写来判定是否是组件，如果是那么会 new 一个对应的类,得到一个对象，再调用对象里的render函数得到期返回值，再进行后续操作。
+
+                  
+
+               组件的属性
+                    1.对于函数组件，属性会作为一个对象的属性，传递给函数的参数
+                    2.对于类组件，属性会作为一个对象的属性，传递给构造函数的参数
+                    相当于在调用函数或类时，会传一个对象进去，而组件上的属性会赋值给对象，
+                      如： <MyFunc number="2"></MyFunc> 该属性会给赋值给对象并把改对象作为参数传给函数。
+                           属性的值很灵活，除字符串外，得用JSX语法
+                    组件的属性，应该使用小驼峰命名法
+                    
+                
+               组件无法改变自身属性
+                    相当于传给函数或类的参数对象，也会被用es6语法冻结
+                    数据属于谁，谁才有权力更改
+                    react中的数据，自顶而下流动
+        
+        
+        
+        */
+    </script>
+    <script type="text/babel" >
+
+         //函数组件
+         function MyFuncComp(props){
+           
+             return <h1>这是一个函数组件:{props.number}</h1>;
+         };
+
+
+         //类组件
+         class MyClassComp extends React.Component{
+             constructor(props){
+                 super(props); //相当于React.Component函数内部的操作  this.props = props
+             }
+            render(){
+                return <h1>这是一个类组件:{this.props.number}</h1>;
+            }
+         };
+    </script>
+    <script type="text/babel" src="./components/MyFuncComp.jsx"></script>
+    <script type="text/babel" src="./components/MyClassComp.jsx"></script>
+    <script type="text/babel">
+        const root = document.getElementById('root');
+        const ZhuJian = (<MyClassComp></MyClassComp>); //仍然会被babel编译成react元素对象，只不过type属性是一个类
+        ReactDOM.render(<React.Fragment>
+                <MyFuncComp number="123"></MyFuncComp>
+                <MyClassComp number={456}></MyClassComp>
+                <MyFuncComp1 obj={{a:'奈斯'}}></MyFuncComp1>
+                <MyClassComp1></MyClassComp1>
+            </React.Fragment>,root);
+    </script>
+</body> 
+
+</html>

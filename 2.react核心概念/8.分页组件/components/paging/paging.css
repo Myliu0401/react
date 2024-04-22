@@ -1,0 +1,50 @@
+.paging {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.paging span,.paging li{
+    padding: 3px 6px;
+    border: 1px solid black;
+    margin: 0px 7px;
+    cursor: pointer;
+    box-sizing: border-box;
+}
+
+
+.paging .paging_about{
+    
+}
+
+.paging .paging_about .about_most{
+
+}
+
+
+.paging .paging_about .about_around{
+
+}
+
+.paging .container {
+    display: flex;
+    padding: 0px;
+}
+
+
+.tightUse{
+    cursor: no-drop !important;
+}
+
+.tightUseBg{
+    background-color: #ccc !important;
+    color: rgb(114, 114, 114) !important;
+    border: 1px solid rgb(114, 114, 114) !important;
+}
+
+
+.current{
+    color: red;
+    font-weight: bold;
+    border: none !important;
+}

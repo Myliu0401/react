@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="root"></div>
+    <script>
+        /*  
+
+                     路由组件
+                         React-Router 为我们提供了两个重要组件
+                     
+                     路由组件
+                        路由组件本身不做任何展示，仅提供路由模式配置，另外，该组件会产生一个上下文，上下文中会提供一些实用的对象和方法，供其他相关组件使用。
+
+                        1. HashRouter:该组件，使用hash模式进行匹配
+                        2. BrowserRouter:该组件，使用BrowserHistory模式进行匹配
+
+                        通常情况下，路由组件只有一个，将该组件包裹整个页面
+                    
+                      Route组件
+                         该组件会根据不同的地址，来判断是否展示该组件
+                         重要属性：
+                            1.path: 匹配的路径
+                                默认情况下，不区分大小写，可以设置sensitive属性为true，来表示区分大小写
+                                默认情况下，只匹配初始目录，如果要精确匹配，配置exact属性为true
+                                    如： url路径为 /a
+                                         如果没有配置exact属性，那么 path属性 /a 开头的都将会被匹配到，/ab这种不算
+                                         如果匹配了exact属性，那么只能完全相同才会被匹配到
+                                如果没有配置path属性，则会匹配任意路径                          
+              
+                            2.component:匹配成功后要显示的组件
+                            3.children:
+                                 如果为React元素，那么会忽略component属性
+                                 如果为函数，那么会传递多个参数，这些参数来自上下文，并且会忽略component属性，无论匹不匹配到都会运行该函数进行渲染。
+                                           如果没有匹配到,那么参数的match属性为null。
+                            4.render:
+                                  函数，跟children函数一样，但是只有匹配到才会运行render函数
+                             
+                            Route组件可以写到任意地方，只要保证它是 路由组件的后代元素 即可
+
+
+                            Route组件的原理： 
+                                  1.会根据url地址来判断是否显示 component属性/children属性
+                                  2. const children = props.children || props.component;
+                                  3. const path = 从上下文中判断是那种模式 如果是 hash ? url中的hash部分 : url中的路径部分 
+                                  4. const is = props.exact ? path === props.path : 使用正则匹配初始值是否相同
+                                  5. if( is ){
+                                       return children
+                                  }else{
+                                      return null
+                                  }
+
+               
+                       Switch组件
+                            写到Switch组件中的Route组件，当匹配到第一个Route后，会立即停止匹配
+                            由于Switch组件会循环所有子组件，然后对每个子组件进行匹配，若匹配到，则渲染对应的组件，然后停止循环，因此，不能在Switch的子组件中使用Route外的其他组件。
+
+                          Switch组件的原理：
+                              for(let i=0; i<props.children.length; i++){      
+                                  if(props.children[i][上下文中的某个特定属性].path === url地址栏中的路径/hash || 有没有exact属性，如果有则必须完全匹配){
+                                         return props.children[i]
+                                  }
+                              }
+                          
+        */
+      
+    </script>
+    <script src="https://unpkg.com/react@16/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+    <script src="https://unpkg.com/prop-types@15.6/prop-types.js"></script>
+    <script src="https://cdn.bootcdn.net/ajax/libs/react-router/5.0.1/react-router.min.js"></script>
+    <script src="https://cdn.bootcdn.net/ajax/libs/react-router-dom/5.0.1/react-router-dom.min.js"></script>
+    <script src="./index.jsx" type="text/babel"></script>
+    <script type="text/babel">
+        const root = document.getElementById('root');
+        ReactDOM.render((<App/>),root);
+    </script>
+</body>
+</html>

@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        /* 
+                link组件  
+                   生成一个无刷新跳转的a元素
+                   属性: 
+                      to:字符串 跳转的目标
+                         对象： pathname:url路径
+                                search
+                                hash
+                                state:附加的状态信息
+                      replace:布尔，表示是否是替换当前地址，默认是false
+                      innerRef:可以将内部的a元素的ref附着在传递的对象或函数参数上
+                        该属性值可以是 ref对象 或者 函数
+                    
+
+                NavLink
+                   是一种特殊的Link组件，Link组件具备的功能，这个组件都有
+                   它具备的额外功能是：根据当前地址和链接地址，来决定该链接的样式
+                       相当于 vue-router的router-link组件 匹配到就会添加默认一些样式上去
+                     activeClass:匹配时使用的类型 
+                          默认匹配到时添加的类型是 active, 可以通过该属性修改匹配到时添加的类型
+                     activeStyle:匹配时使用的内联样式
+                          如果匹配到就会将该属性的样式添加到元素中
+                     exact:是否精确匹配
+                     sensitive:匹配时是否区分大小写
+                          是否区分 地址栏路径和链接的大小写
+                     strict:是否严格匹配最后一个斜杠 
+                        如： /a/  也能被匹配到
+                     
+
+                Redirect
+                   重定向组件，当加载到该组件时，会无刷新跳转到另一个地址
+                   属性: 
+                      to：跳转的地址 可以是字符串或对象，跟上面的link组件一样
+                      push:默认是false,表示跳转时使用替换的方式，true表示采用push的方式进行跳转
+                      from:当加载到该组件时，会判断是否符合from属性规则，符合才会进行跳转。
+                      exact:是否精确匹配from
+                      sensitive:from匹配时是否区分大小写
+                      strict:from是否严格匹配最后一个斜杠
+                          
+        
+        
+        
+        
+         */
+    </script>
+</body>
+</html>

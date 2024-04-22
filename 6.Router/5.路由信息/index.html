@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="root"></div>
+    <script>
+        /* 
+                     路由信息
+                        路由组件（HashRouter、BrowserRouter）会创建一个上下文，并且，向上下文中注入一些信息
+                        该上下文对开发者是隐藏的，Route组件若匹配到地址，则会将这些上下文中的信息作为属性传给对应的组件。
+
+                     Route组件传入的属性： 
+                        history
+                           它并不是window.history对象，我们利用该对象进行无刷新跳转地址
+                           
+                           为什么没有直接使用history对象
+                               1.React-Router中有两种模式：Hash、History,如果直接使用window.history进行跳转，只能支持一种模式
+                               2.当使用window.history.pushState方法是，没有办法监听到跳转，将导致React无法知道地址发生了变化，结果导致无法重新渲染组件
+                           
+                           这些属性是上下文中的属性，所以改变也是对上下文进行改变，所以会从上下文的所有者开始重新渲染。
+
+                           该history对象中的属性：
+                              1. push:将某个新的地址入栈（历史记录栈）
+                                    参数1：新的地址
+                                    参数2：可选，附带的状态数据
+                              2. replace: 将某个新的地址替代掉当前栈中的选中地址
+                              3. go: 与window.history一致
+                              4. forward:与window.history一致
+                              5. back:与window.history一致
+
+                        
+                        location
+                            与history.location对象完全一致，但是，与window.location不是同一个对象
+                            location对象中记录了当前地址的相关信息
+                            我们通常使用第三方库 query-string, 进行对地址栏参数的解析
+                        
+
+                        match
+                            该对象中保存了，路由匹配的相关信息
+                               isExact属性： 表示当前地址栏中的路径和路由匹配的路径是否完全一致
+                               params:获取路径规则中对应的数据
+                                 如： 路由匹配的地址是 /news/:naisi/:misi 
+                                 那么该params属性就是 {  naisi:xxx,misi:xxx  }
+                            实际上，在书写Route组件的path属性时，可以书写一个 string pattern （字符串正则）
+                                如: /news/:naisi(正则)/:misi(正则)
+
+
+                            react-router使用了第三方库：Path-to-RegExp, 该库的作用是，将一个字符串正则转换成一个真正的正则表达式
+                                 
+
+                        
+                        非路由组件获取路由信息
+                             如果组件不是Route的子组件，而是嵌套在其后代组件中的，这些组件的属性中是没有路由的信息的，
+                             如果这些组件想要获取到路由的信息，可以使用下面两种方式：
+                                1.将路由信息从父组件中一层一层传递到子组件
+                                2.使用react-router提供了一个高阶组件withRouter，包装要使用的组件，该高阶组件会返回一个新组件，新组件将向
+                                  提供的组件注入路由信息。
+                        
+        */
+    </script>
+   
+</body>
+</html>

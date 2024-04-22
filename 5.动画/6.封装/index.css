@@ -1,0 +1,23 @@
+.Fade-exit {}
+
+.Fade-exit-active {
+    opacity: 0;
+    
+}
+
+.Fade-exit-done {
+    opacity: 0;
+}
+
+.Fade-enter,
+.Fade-appear {
+    opacity: 0;
+}
+
+.Fade-enter-active,
+.Fade-appear-active {
+    opacity: 1;
+    
+}
+
+.Fade-enter-done {}

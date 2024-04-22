@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        
+    </style>
+</head>
+<body>
+    <div id="root"></div>
+    <script>
+        /* 
+                表单 
+                   受控组件和非受控组件
+
+                   受控组件：组件的使用者，有能力完全控制该组件的行为和内容，通常情况下，受控组件往往没有自身的状态，其内容完全受到属性的控制。
+                      可以获取value，选中的哪一个，控制内容、控制选中等等
+                      在内置组件上必须传递 onChange事件，每次设置都会触发该事件，所有表单元素都一样，然后通过该事件进行控制操作内容、选中等等
+ 
+                   非受控组件：组件的使用者，没有能力控制该组件的行为和内容，组件的行为和内容完全执行控制
+                      在react语法中，只能设置内容，选中。无法控制获取内容、选中等等
+
+                   **表单组件，默认情况下是非受控组件，一旦设置了表单组件的value属性，则变为受控组件(单选框和多选框设置checked属性，其他都是设置value属性，让其变为受控组件)**
+                    checked属性true就选中，false就不选中
+        
+        
+        
+        */
+    </script>
+    <script src="https://unpkg.com/react@16/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+    <script src="./components/NumberInput.jsx" type="text/babel"></script>
+    <script src="./components/Form.jsx" type="text/babel"></script>
+    <script type="text/babel">
+    
+         const root = document.getElementById('root');
+      
+
+         ReactDOM.render((<React.Fragment><NumberInput></NumberInput><Form></Form></React.Fragment>),root);
+    </script>
+    <script>
+      
+    </script>
+</body>
+</html>

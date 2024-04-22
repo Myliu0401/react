@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        :root,body{
+           width: 100%;
+           height: 100%;
+        }
+        *{
+            margin: 0px;
+            padding: 0px;
+        }
+       .mouser{
+            width: 350px;
+            height: 350px;
+            border: 2px solid black;
+            background-color: cadetblue;
+            box-sizing: border-box;
+            position: relative;
+            left: 50%;
+            transform: translateX(-50%);
+       }
+    </style>
+</head>
+<body>
+    <div id="root"></div>
+    <script>
+        /* 
+                    render props
+                       有时候，某些组件的各种功能及其处理逻辑几乎完全相同，只是显示的界面不一样，就可以将逻辑代码提取出来，解决重复代码的问题（横切关注点）
+                      
+                       解决的办法：
+                          1. HOC 高阶组件
+                              利用高阶组件来实现。
+                            
+                          2. render props 
+                              跟新版上下文的 消费者 一样，传递一个函数，渲染函数的返回值。
+                            render props 
+                              1. 某个组件，需要某个属性
+                              2. 该属性是一个函数，函数的返回值用于渲染，
+                              3. 会传递需要的数据参数给函数
+                              4. 通常该属性的名字起为 render
+                              5. 注意纯组件的属性 (尽量避免每次传递的render props的地址不一致)
+        
+        
+        
+        
+        */
+    </script>
+    <script src="https://unpkg.com/react@16/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+    <!-- <script src="./components/renderProps/DivMo.jsx" type="text/babel"></script>
+    <script src="./components/renderProps/Coordinates.jsx" type="text/babel"></script>
+    <script src="./components/renderProps/MouseListener.jsx" type="text/babel"></script>
+    <script src="./components/renderProps/Test.jsx" type="text/babel"></script> -->
+    <script src="./components/Hoc/Coor.jsx" type="text/babel"></script>
+    <script src="./components/Hoc/DivMo.jsx" type="text/babel"></script>
+    <script src="./components/Hoc/redundancy.jsx" type="text/babel"></script>
+    <script src="./components/Hoc/Test.jsx" type="text/babel"></script>
+    <script type="text/babel">
+         const root = document.getElementById('root');
+         ReactDOM.render((<Test></Test>),root);
+       
+    </script>
+</body>
+</html>

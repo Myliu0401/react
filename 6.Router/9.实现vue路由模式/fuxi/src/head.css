@@ -1,0 +1,27 @@
+
+
+.head{
+   width: 100%;
+   height:70px;
+   background-color: #abcdef;
+   display: flex;
+   align-items: center;
+   padding: 0px 20px;
+}
+
+.head .head_left{
+
+}
+
+.head .head_left a{
+  padding: 0px 10px;
+}
+
+.head .head_right{
+
+}
+
+.head .head_right .logo{
+
+}
+

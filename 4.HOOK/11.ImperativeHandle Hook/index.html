@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="root"></div>
+    <script>
+        /* 
+            ImperativeHandle Hook  
+                  该 Hook 是用来设置对象的current属性
+                
+            useImperative函数  该函数接收三个参数
+               1. 为一个对象
+
+               2. 为一个函数
+                      如果依赖没有发生变化，则不会运行该函数，只有依赖项发生变化才会运行，并且将返回值 赋给 第一个参数对象的current属性
+                      第一次调用后，返回值 会进行缓存
+
+               3. 为一个依赖项数组
+
+
+               ImperativeHandle 吐音  丁瓶而绿,尔潘的
+        
+        
+        */
+    </script>
+    <script src="https://unpkg.com/react@16/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+    <script src="./index.jsx" type="text/babel"></script>
+    <script type="text/babel">
+          const root = document.getElementById('root');
+
+          ReactDOM.render(<App/>,root);
+    
+    
+    </script>
+</body>
+</html>

@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        :root,body{
+            width: 100%;
+            height: 100%;
+        }
+        *{
+            margin: 0px;
+            padding: 0px;
+        }
+        #root{
+            width: 600px;
+            height: 100%;
+            box-sizing: border-box;
+            border: 2px solid black;
+            margin: 0 auto;
+            overflow: scroll;
+        }
+        ul{
+            list-style: none;
+        }
+
+        ul li {
+            margin: 20px 0px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="root"></div>
+    <script src="https://unpkg.com/react@16/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+    <script src="https://cdn.bootcdn.net/ajax/libs/Mock.js/1.0.1-beta3/mock-min.js"></script>
+    <script src="./mock/index.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script type="text/babel" src="./components/MyFuncLi.jsx"></script>
+    <script type="text/babel" src="./components/MyClassUl.jsx"></script>
+    <script type="text/babel">
+
+        //请求数据
+        async function requData() {
+            const data = await axios.get('/api/getStudent');
+            //console.log(data.data.data)
+            return data.data.data;
+        };
+
+        const root = document.getElementById('root');
+
+        //生成列表
+        async function generate() {
+            ReactDOM.render('正在加载中...', root);
+            const data = await requData();
+            ReactDOM.render((<MyClassUl stus={data}></MyClassUl>), root);
+        };
+
+
+        generate();
+
+
+
+
+    </script>
+</body>
+
+</html>

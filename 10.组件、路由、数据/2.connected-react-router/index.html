@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    /* 
+                   chrome插件：redux-devtools
+                   npm 安装第三方库 redux-devtools-extension
+
+            
+          redux和router的结合库   connected-react-router
+              该库就是加强版的 路由库，将路由信息提到数据仓库中，有仓库来进行操控
+              本质上，router中的某些数据可能会跟数据仓库中的数据进行联动
+              该组件会将下面的路由数据和仓库保持同步
+                   1. action: 这个action不是触发数据仓库的action, 而是路由数据的action,它表示路由跳转的方式 (push、pop、replace)
+
+                   2. location: 它记录了当前的地址信息
+          
+          该库中的内容：
+              connectRouter
+                 这是一个函数，调用后，会返回一个用于管理数据仓库中路由信息的reducer，该函数需要传递一个参数，参数是一个history对象。该对象，可以使用第三方库 history得到
+
+              routerMiddleware  参数为 history对象
+                 该函数会返回一个redux中间件，用于拦截一些特殊的action
+
+              ConnectedRouter
+                  这是一个组件，用于向上下文提供一个history对象和其他的路由信息 （与react-router提供的信息一致），之所以需要新制作一个组件，是因为该库必须保证整个过程使用的是同一个history对象。
+
+              一些该库的action创建函数
+                push
+                replace
+
+              
+
+             
+    
+    
+    
+    */
+  </script>
+</body>
+</html>
